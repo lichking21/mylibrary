@@ -13,7 +13,7 @@ OBJS = $(patsubst $(SRC)/%c, $(OBJ)/%o, $(SRCS))
 all: $(TARGET)
 
 $(TARGET): $(OBJS) | $(BIN)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
 
 $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
