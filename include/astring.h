@@ -15,6 +15,10 @@ string* strnew(const char*);
 void strfree(string*);
 
 // Capacity & Size
-size_t strlength(const char*);
+size_t cstrlength(const char*);
+size_t strlength(string*);
+
+string* cstrappend(char*, char*);
+string* strappend(string*, string*);
 
 #endif
