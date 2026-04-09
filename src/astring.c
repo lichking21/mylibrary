@@ -52,7 +52,7 @@ static char* append_raw(char* str1, size_t len1, const char* str2, size_t len2) 
 
     str1 = temp;
 
-    for (int i = 0; i < len2; i++)
+    for (size_t i = 0; i < len2; i++)
         str1[len1 + i] = str2[i];
     
     str1[len1 + len2] = '\0';
@@ -84,4 +84,22 @@ void strappend(string* s1, string* s2) {
         s1->size += len2;
         s1->capacity = s1->size + 1;
     }
+}
+
+void strpushback(string* s, char val) {
+    if (s == NULL || s->data == NULL) return;
+
+    if (s->size + 2 > s->capacity) {
+        size_t new_capacity = (s->capacity == 0) ? 0 : s->capacity * 2;
+        
+        char* temp = (char*)realloc(s->data, new_capacity);
+        if (temp == NULL) return;
+
+        s->data = temp;
+        s->capacity = new_capacity;
+    }
+
+    s->data[s->size] = val;
+    s->size++;
+    s->data[s->size] = '\0';
 }

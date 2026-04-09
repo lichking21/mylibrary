@@ -11,7 +11,7 @@ int main() {
 
     printf("string data: %s\n", str->data);
     printf("string size: %zu\n", str->size);
-    printf("string capasity: %zu\n", str->capacity);
+    printf("string capasity: %zu\n\n", str->capacity);
 
     char* s1 = strdup("Ya");
     char* s2 = " pidoras";
@@ -20,7 +20,13 @@ int main() {
     string* s3 = strnew("Eto ");
     string* s4 = strnew("52");
     strappend(s3, s4);
-    printf("strappend res: %s\n", s3->data);
+    printf("strappend res: %s\n\n", s3->data);
+
+    printf("strpushback res: \n");
+    strpushback(str, '!');
+    printf("new string data: %s\n", str->data);
+    printf("new string size: %zu\n", str->size);
+    printf("new string capasity: %zu\n\n", str->capacity);
 
     strfree(str);
     strfree(s3);
