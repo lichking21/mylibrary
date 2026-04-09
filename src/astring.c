@@ -86,7 +86,7 @@ void strappend(string* s1, string* s2) {
     }
 }
 
-void strpushback(string* s, char val) {
+void pushback(string* s, char val) {
     if (s == NULL || s->data == NULL) return;
 
     if (s->size + 2 > s->capacity) {
@@ -101,5 +101,12 @@ void strpushback(string* s, char val) {
 
     s->data[s->size] = val;
     s->size++;
+    s->data[s->size] = '\0';
+}
+
+void popback(string* s) {
+    if (s == NULL || s->data == NULL) return;
+    
+    s->size--;
     s->data[s->size] = '\0';
 }

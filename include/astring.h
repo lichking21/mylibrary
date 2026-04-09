@@ -21,6 +21,7 @@ size_t strlength(string*);
 char* cstrappend(char*, const char*);
 void strappend(string*, string*);
 
-void strpushback(string*, char);
+void pushback(string*, char);
+void popback(string*);
 
 #endif

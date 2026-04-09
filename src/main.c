@@ -22,11 +22,17 @@ int main() {
     strappend(s3, s4);
     printf("strappend res: %s\n\n", s3->data);
 
-    printf("strpushback res: \n");
-    strpushback(str, '!');
-    printf("new string data: %s\n", str->data);
-    printf("new string size: %zu\n", str->size);
-    printf("new string capasity: %zu\n\n", str->capacity);
+    printf("pushback res: \n");
+    pushback(str, '!');
+    printf("string data: %s\n", str->data);
+    printf("string size: %zu\n", str->size);
+    printf("string capasity: %zu\n\n", str->capacity);
+
+    printf("popback res: \n");
+    popback(str);
+    printf("string data: %s\n", str->data);
+    printf("string size: %zu\n", str->size);
+    printf("string capasity: %zu\n\n", str->capacity);
 
     strfree(str);
     strfree(s3);
