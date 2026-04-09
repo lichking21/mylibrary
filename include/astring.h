@@ -18,7 +18,7 @@ void strfree(string*);
 size_t cstrlength(const char*);
 size_t strlength(string*);
 
-string* cstrappend(char*, char*);
-string* strappend(string*, string*);
+char* cstrappend(char*, const char*);
+void strappend(string*, string*);
 
 #endif

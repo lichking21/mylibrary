@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "astring.h"
 
 int main() {
@@ -11,9 +13,14 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n", str->capacity);
 
+    char* s1 = strdup("Ya");
+    char* s2 = " pidoras";
+    printf("cstrappend res: %s\n", cstrappend(s1, s2));
+
     string* s3 = strnew("Eto ");
     string* s4 = strnew("52");
-    printf("strappend res: %s\n", strappend(s3, s4)->data);
+    strappend(s3, s4);
+    printf("strappend res: %s\n", s3->data);
 
     strfree(str);
     strfree(s3);
