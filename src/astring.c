@@ -110,3 +110,9 @@ void popback(string* s) {
     s->size--;
     s->data[s->size] = '\0';
 }
+
+char* at(string* s, size_t pos) {
+    if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
+
+    return &s->data[pos];
+}

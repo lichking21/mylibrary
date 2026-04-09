@@ -34,6 +34,8 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
+    printf("at res: %s\n\n", at(s4, 1));
+
     strfree(str);
     strfree(s3);
     strfree(s4);

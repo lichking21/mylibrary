@@ -24,4 +24,7 @@ void strappend(string*, string*);
 void pushback(string*, char);
 void popback(string*);
 
+// 
+char* at(string*, size_t);
+
 #endif
