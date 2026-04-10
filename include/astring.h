@@ -35,5 +35,6 @@ char* begin(string*);
 size_t copy(string*, char*, size_t, size_t);
 
 int compareall(string*, string*);
+int compare(string*, size_t, size_t, string*);
 
 #endif

@@ -12,11 +12,11 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    string* str1 = strnew("red apple");
-    string* str2 = strnew("red apple");
+    string* str1 = strnew("green apple");
+    string* str2 = strnew("apple");
 
-    if (compareall(str1, str2) == 0)
-        printf("both are equal\n\n");
+    if (compare(str1, 6, 5, str2))
+        printf("green apple is an apple\n\n");
 
     strfree(str);
 

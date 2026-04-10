@@ -145,11 +145,11 @@ size_t copy(string* s, char* dest, size_t len, size_t pos) {
 }
 
 int compareall(string* s1, string* s2) {
-    if (s1 == NULL || s1->data == NULL || s2 == NULL || s2->data == NULL)
-        return -1;
+    if (s1 == NULL || s1->data == NULL) return -1;
+    if (s2 == NULL || s2->data == NULL) return 1;
 
-    size_t len1 = strlength(s1);
-    size_t len2 = strlength(s2);
+    size_t len1 = s1->size;
+    size_t len2 = s2->size;
     size_t min_len = (len1 > len2) ? len2 : len1;
 
     int res = memcmp(s1->data, s2->data, min_len);
@@ -159,3 +159,24 @@ int compareall(string* s1, string* s2) {
 
     return 0;
 }
+
+int compare(string* s1, size_t pos, size_t len, string* s2) {
+    if (s1 == NULL || s1->data == NULL) return -1;
+    if (s2 == NULL || s2->data == NULL) return 1;
+
+    if (pos > s1->size) return -1;
+
+    size_t len1 = (pos + len > s1->size) ? (s1->size - pos) : len;
+    size_t len2 = s2->size;
+    size_t min_len = (len1 > len2) ? len2 : len1;
+
+    int res = memcmp(s1->data, s2->data, min_len);
+
+    if (res != 0) return (res < 0) ? -1 : 1;
+
+    if (len1 < len2) return -1;
+    if (len1 > len2) return 1;
+
+    return 0;
+}
+
