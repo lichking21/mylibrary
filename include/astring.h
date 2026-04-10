@@ -24,9 +24,11 @@ void strappend(string*, string*);
 void pushback(string*, char);
 void popback(string*);
 
+void clear(string*);
+
 // Elements accesess
 char* at(string*, size_t);
 char* back(string*);
-char* beign(string*);
+char* begin(string*);
 
 #endif

@@ -12,7 +12,11 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    printf("back() res: %s\n\n", back(str));
+    clear(str);
+    printf("str after clear: \n");
+    printf("string data: %s\n", str->data);
+    printf("string size: %zu\n", str->size);
+    printf("string capasity: %zu\n\n", str->capacity);
 
     strfree(str);
 

@@ -110,6 +110,13 @@ void popback(string* s) {
     s->data[s->size] = '\0';
 }
 
+void clear(string* s) {
+    if (s == NULL || s->data == NULL) return;
+
+    while(s->size != 0)
+        popback(s);
+}
+
 // Elements accesess
 char* at(string* s, size_t pos) {
     if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
@@ -120,7 +127,6 @@ char* at(string* s, size_t pos) {
 char* back(string* s) {
     return &s->data[s->size - 1];
 }
-
 char* begin(string* s) {
     return s->data;
 }
