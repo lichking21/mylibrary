@@ -12,12 +12,14 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    string* test = strnew("Test string...");
-    char* dest = (char*)malloc(25);
-    copy(test, dest, 6, 5);
-    printf("destination contains: %s\n\n", dest);
+    string* str1 = strnew("red apple");
+    string* str2 = strnew("red apple");
+
+    if (compareall(str1, str2) == 0)
+        printf("both are equal\n\n");
 
     strfree(str);
+
 
     return 0;
 }

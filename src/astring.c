@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 #include "astring.h"
 
 // Memory management
@@ -141,4 +142,20 @@ size_t copy(string* s, char* dest, size_t len, size_t pos) {
     dest[len] = '\0';
 
     return len;
+}
+
+int compareall(string* s1, string* s2) {
+    if (s1 == NULL || s1->data == NULL || s2 == NULL || s2->data == NULL)
+        return -1;
+
+    size_t len1 = strlength(s1);
+    size_t len2 = strlength(s2);
+    size_t min_len = (len1 > len2) ? len2 : len1;
+
+    int res = memcmp(s1->data, s2->data, min_len);
+
+    if (res < 0) return -1;
+    else if (res > 0) return 1;
+
+    return 0;
 }
