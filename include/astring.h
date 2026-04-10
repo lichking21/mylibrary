@@ -24,7 +24,9 @@ void strappend(string*, string*);
 void pushback(string*, char);
 void popback(string*);
 
-// 
+// Elements accesess
 char* at(string*, size_t);
+char* back(string*);
+char* beign(string*);
 
 #endif

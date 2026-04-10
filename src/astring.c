@@ -103,7 +103,6 @@ void pushback(string* s, char val) {
     s->size++;
     s->data[s->size] = '\0';
 }
-
 void popback(string* s) {
     if (s == NULL || s->data == NULL) return;
     
@@ -111,8 +110,17 @@ void popback(string* s) {
     s->data[s->size] = '\0';
 }
 
+// Elements accesess
 char* at(string* s, size_t pos) {
     if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
 
     return &s->data[pos];
+}
+
+char* back(string* s) {
+    return &s->data[s->size - 1];
+}
+
+char* begin(string* s) {
+    return s->data;
 }
