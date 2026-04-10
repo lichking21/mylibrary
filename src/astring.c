@@ -144,7 +144,9 @@ size_t copy(string* s, char* dest, size_t len, size_t pos) {
     return len;
 }
 
-int compareall(string* s1, string* s2) {
+int compareall(const string* s1, const string* s2) {
+    if (s1 == s2) return 0;
+
     if (s1 == NULL || s1->data == NULL) return -1;
     if (s2 == NULL || s2->data == NULL) return 1;
 
@@ -154,8 +156,10 @@ int compareall(string* s1, string* s2) {
 
     int res = memcmp(s1->data, s2->data, min_len);
 
-    if (res < 0) return -1;
-    else if (res > 0) return 1;
+    if (res != 0) return (res < 0) ? -1 : 1;
+
+    if (len1 < len2) return -1;
+    if (len1 > len2) return 1;
 
     return 0;
 }
