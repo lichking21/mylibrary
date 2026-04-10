@@ -130,3 +130,15 @@ char* back(string* s) {
 char* begin(string* s) {
     return s->data;
 }
+
+size_t copy(string* s, char* dest, size_t len, size_t pos) {
+    if (s == NULL || s->data == NULL) return 0;
+
+    for (size_t i = 0; i < len; i++) {
+        dest[i] = s->data[pos++];
+    }
+
+    dest[len] = '\0';
+
+    return len;
+}

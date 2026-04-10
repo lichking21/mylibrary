@@ -28,7 +28,10 @@ void clear(string*);
 
 // Elements accesess
 char* at(string*, size_t);
+
 char* back(string*);
 char* begin(string*);
+
+size_t copy(string*, char*, size_t, size_t);
 
 #endif

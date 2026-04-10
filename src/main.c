@@ -12,11 +12,10 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    clear(str);
-    printf("str after clear: \n");
-    printf("string data: %s\n", str->data);
-    printf("string size: %zu\n", str->size);
-    printf("string capasity: %zu\n\n", str->capacity);
+    string* test = strnew("Test string...");
+    char* dest = (char*)malloc(25);
+    copy(test, dest, 6, 5);
+    printf("destination contains: %s\n\n", dest);
 
     strfree(str);
 
