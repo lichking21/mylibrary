@@ -16,6 +16,5 @@ int main() {
 
     strfree(str);
 
-
     return 0;
 }

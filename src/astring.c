@@ -50,23 +50,24 @@ size_t length(string* s) {
 
 void append(string* s1, string* s2) {
     if (s1 == NULL || s2 == NULL) return;
+    if (s2->data == NULL || s2->size == 0) return;
 
-    size_t len1 = length(s1);
-    size_t len2 = length(s2);
+    size_t new_size = s1->size + s2->size;
 
-    char* temp = (char*)realloc(s1->data, len1 + len2 + 1);
-    if (temp == NULL) return;
+    if (new_size + 1 > s1->capacity) {
+        size_t new_capacity = (s1->capacity == 0) ? new_size + 1 : s1->capacity * 2;
+        
+        char* temp = (char*)realloc(s1->data, new_capacity);
+        if (temp == NULL) return
 
-    for (size_t i = 0; i < len2; i++)
-        temp[len1 + i] = s2->data[i];
-
-    temp[len1 + len2] = '\0';
-
-    if (s1->data != NULL) {
         s1->data = temp;
-        s1->size += len2;
-        s1->capacity = s1->size + 1;
+        s1->capacity = new_capacity;
     }
+
+    memcpy(s1->data + s1->size, s2->data, s2->size);
+
+    s1->size = new_size;
+    s1->data[s1->size] = '\0';
 }
 
 void pushback(string* s, char val) {
