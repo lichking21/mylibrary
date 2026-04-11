@@ -100,6 +100,13 @@ void clear(string* s) {
         popback(s);
 }
 
+int empty(string* s) {
+    if (s == NULL || s->data == NULL || s->size == 0)
+        return 1;
+
+    return 0;
+}
+
 // Elements accesess
 char* at(string* s, size_t pos) {
     if (s == NULL || s->data == NULL || pos >= s->size) return NULL;

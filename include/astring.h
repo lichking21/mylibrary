@@ -24,6 +24,8 @@ void popback(string*);
 
 void clear(string*);
 
+int empty(string*);
+
 // Elements accesess
 char* at(string*, size_t);
 
