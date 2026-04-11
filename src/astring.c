@@ -9,7 +9,7 @@ string* strnew(const char* s) {
     if (str == NULL) 
         return NULL;
         
-    size_t size = cstrlength(s);
+    size_t size = strlen(s);
     size_t capacity = size + 1;
     
     str->data = malloc(size + 1);
@@ -38,50 +38,32 @@ void strfree(string* s) {
 }
 
 // Capacity & Size
-static size_t strlen_raw(const char* s) {
+size_t length(string* s) {
     size_t len = 0;
-    while (*s != '\0') {
+    while (*s->data != '\0') {
         len++;
         s++;
     }
     
     return len;
 }
-static char* append_raw(char* str1, size_t len1, const char* str2, size_t len2) {
-    char* temp = (char*)realloc(str1, len1+len2+1);
-    if (temp == NULL) return NULL;
 
-    str1 = temp;
-
-    for (size_t i = 0; i < len2; i++)
-        str1[len1 + i] = str2[i];
-    
-    str1[len1 + len2] = '\0';
-
-    return str1;
-}
-
-size_t cstrlength(const char* s) {
-    return strlen_raw(s);
-}
-size_t strlength(string* s) {
-    return strlen_raw(s->data);
-}
-
-char* cstrappend(char* s1, const char* s2) {
-    if (s1 == NULL || s2 == NULL) return NULL;
-
-    return append_raw(s1, cstrlength(s1), s2, cstrlength(s2));
-}
-void strappend(string* s1, string* s2) {
+void append(string* s1, string* s2) {
     if (s1 == NULL || s2 == NULL) return;
 
-    size_t len1 = strlength(s1);
-    size_t len2 = strlength(s2);
+    size_t len1 = length(s1);
+    size_t len2 = length(s2);
 
-    char* new_data = append_raw(s1->data, len1, s2->data, len2);
-    if (new_data != NULL) {
-        s1->data = new_data;
+    char* temp = (char*)realloc(s1->data, len1 + len2 + 1);
+    if (temp == NULL) return;
+
+    for (size_t i = 0; i < len2; i++)
+        temp[len1 + i] = s2->data[i];
+
+    temp[len1 + len2] = '\0';
+
+    if (s1->data != NULL) {
+        s1->data = temp;
         s1->size += len2;
         s1->capacity = s1->size + 1;
     }

@@ -15,11 +15,9 @@ string* strnew(const char*);
 void strfree(string*);
 
 // Capacity & Size
-size_t cstrlength(const char*);
-size_t strlength(string*);
+size_t length(string*);
 
-char* cstrappend(char*, const char*);
-void strappend(string*, string*);
+void append(string*, string*);
 
 void pushback(string*, char);
 void popback(string*);
