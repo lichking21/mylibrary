@@ -48,7 +48,7 @@ size_t length(string* s) {
     return len;
 }
 
-void append(string* s1, string* s2) {
+void append(string* s1, const string* s2) {
     if (s1 == NULL || s2 == NULL) return;
     if (s2->data == NULL || s2->size == 0) return;
 
@@ -58,7 +58,7 @@ void append(string* s1, string* s2) {
         size_t new_capacity = (s1->capacity == 0) ? new_size + 1 : s1->capacity * 2;
         
         char* temp = (char*)realloc(s1->data, new_capacity);
-        if (temp == NULL) return
+        if (temp == NULL) return;
 
         s1->data = temp;
         s1->capacity = new_capacity;
@@ -101,7 +101,7 @@ void clear(string* s) {
         popback(s);
 }
 
-int empty(string* s) {
+int empty(const string* s) {
     if (s == NULL || s->data == NULL || s->size == 0)
         return 1;
 
@@ -109,17 +109,20 @@ int empty(string* s) {
 }
 
 // Elements accesess
-char* at(string* s, size_t pos) {
+const char* at(const string* s, size_t pos) {
     if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
 
     return &s->data[pos];
 }
 
-char* back(string* s) {
+const char* back(const string* s) {
     return &s->data[s->size - 1];
 }
-char* begin(string* s) {
+const char* begin(const string* s) {
     return s->data;
+}
+const char* end(const string* s) {
+    return &s->data[s->size];
 }
 
 size_t copy(string* s, char* dest, size_t len, size_t pos) {

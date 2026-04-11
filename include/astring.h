@@ -17,20 +17,21 @@ void strfree(string*);
 // Capacity & Size
 size_t length(string*);
 
-void append(string*, string*);
+void append(string*, const string*);
 
 void pushback(string*, char);
 void popback(string*);
 
 void clear(string*);
 
-int empty(string*);
+int empty(const string*);
 
 // Elements accesess
-char* at(string*, size_t);
+const char* at(const string*, size_t);
 
-char* back(string*);
-char* begin(string*);
+const char* back(const string*);
+const char* begin(const string*);
+const char* end(const string*);
 
 size_t copy(string*, char*, size_t, size_t);
 
