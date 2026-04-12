@@ -38,4 +38,6 @@ size_t copy(string*, char*, size_t, size_t);
 int compareall(const string*, const string*);
 int compare(string*, size_t, size_t, string*);
 
+string* erase(string*, size_t pos, size_t len);
+
 #endif

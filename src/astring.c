@@ -177,3 +177,20 @@ int compare(string* s1, size_t pos, size_t len, string* s2) {
     return 0;
 }
 
+string* erase(string* s, size_t pos, size_t len) {
+    if (s == NULL || s->data == NULL) return NULL;
+    if (pos > s->size) return NULL;
+
+    if (len > s->size - pos) len = s->size - pos;
+    if (len == 0) return s;
+
+    void* dest = s->data + pos;
+    void* src = s->data + pos + len;
+    size_t bytes_to_move = s->size - pos - len + 1;
+
+    memmove(dest, src, bytes_to_move);
+
+    s->size -= len;
+
+    return s;
+}

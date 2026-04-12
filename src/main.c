@@ -12,7 +12,10 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    printf("is empty: %d\n\n", empty(str));
+    string* s = strnew("red is color");
+    printf("s: %s\n", s->data);
+    erase(s, 3, 3);
+    printf("s: %s\n", s->data);
 
     strfree(str);
 
