@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-// Memory management
+// ========== Memory management
 string* strnew(const char* s) {
     string* str = malloc(sizeof(string));
     if (str == NULL) 
@@ -40,7 +40,7 @@ void strfree(string* s) {
     free(s);
 }
 
-// Capacity & Size
+// ========== Capacity & Size
 size_t length(string* s) {
     size_t len = 0;
     while (*s->data != '\0') {
@@ -149,7 +149,7 @@ string* erase(string* s, size_t pos, size_t len) {
     return s;
 }
 
-// Elements accesess
+// ========== Elements accesess
 const char* at(const string* s, size_t pos) {
     if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
 
@@ -246,3 +246,27 @@ size_t find(const string* s, const string* needle) {
     return -1;
 }
 
+string* replace(string* s, size_t pos, size_t len, const string* str) {
+    if (!s || !s->data || !str || !str->data) return NULL;
+    if (pos > s->size) return NULL;
+
+    size_t new_size = s->size - len + str->size;
+    if (new_size + 1 > s->capacity) {
+        size_t new_capacity = (s->capacity == 0) ? new_size + 1 : s->capacity * 2;
+
+        char* temp = (char*)realloc(s->data, new_capacity);
+        if (!temp) return NULL;
+
+        s->data = temp;
+        s->capacity = new_capacity;
+    }
+
+    void* dest = s->data + pos + str->size;
+    void* src = s->data + pos + len;
+    size_t bytes_to_move = s->size - pos - len + 1;
+    memmove(dest, src, bytes_to_move);
+
+    memcpy(s->data + pos, str->data, str->size);
+
+    return src;
+}

@@ -10,11 +10,11 @@ typedef struct
 
 }string;
 
-// Memory management
+// ========== Memory management
 string* strnew(const char*);
 void strfree(string*);
 
-// Capacity & Size
+// ========== Capacity & Size
 size_t length(string*);
 
 void append(string*, const string*);
@@ -27,7 +27,7 @@ void clear(string*);
 int empty(const string*);
 string* erase(string*, size_t pos, size_t len);
 
-// Elements accesess
+// ========== Elements accesess
 const char* at(const string*, size_t);
 
 const char* back(const string*);
@@ -39,5 +39,7 @@ int compareall(const string*, const string*);
 int compare(string*, size_t, size_t, string*);
 
 size_t find(const string*, const string*);
+
+string* replace(string*, size_t, size_t, const string*);
 
 #endif
