@@ -3,6 +3,9 @@
 #include <string.h>
 #include "astring.h"
 
+#include <stdio.h>
+
+
 // Memory management
 string* strnew(const char* s) {
     string* str = malloc(sizeof(string));
@@ -107,6 +110,23 @@ int empty(const string* s) {
 
     return 0;
 }
+string* erase(string* s, size_t pos, size_t len) {
+    if (s == NULL || s->data == NULL) return NULL;
+    if (pos > s->size) return NULL;
+
+    if (len > s->size - pos) len = s->size - pos;
+    if (len == 0) return s;
+
+    void* dest = s->data + pos;
+    void* src = s->data + pos + len;
+    size_t bytes_to_move = s->size - pos - len + 1;
+
+    memmove(dest, src, bytes_to_move);
+
+    s->size -= len;
+
+    return s;
+}
 
 // Elements accesess
 const char* at(const string* s, size_t pos) {
@@ -177,20 +197,32 @@ int compare(string* s1, size_t pos, size_t len, string* s2) {
     return 0;
 }
 
-string* erase(string* s, size_t pos, size_t len) {
-    if (s == NULL || s->data == NULL) return NULL;
-    if (pos > s->size) return NULL;
+size_t find(string* s, string* needle) {
+    if (!s || !s->data) return -1;
+    if (needle->size == 0 || !needle || !needle->data) return 0;
+    if (s->size < needle->size) return -1;
+    
+    size_t table[256];
+    size_t len = needle->size;
 
-    if (len > s->size - pos) len = s->size - pos;
-    if (len == 0) return s;
+    for (int i = 0; i < 256; i++)
+        table[i] = len;
 
-    void* dest = s->data + pos;
-    void* src = s->data + pos + len;
-    size_t bytes_to_move = s->size - pos - len + 1;
+    for (size_t i = 0; i < len - 1; i++)
+        table[(unsigned char)needle->data[i]] = len - 1 - i;
+        
+    size_t shift = 0;
+    while (shift <= s->size - len) {
 
-    memmove(dest, src, bytes_to_move);
+        size_t i = len - 1;
+        while (needle->data[i] == s->data[shift + i]){
+            if (i == 0) return shift;
+            i--;
+        }
 
-    s->size -= len;
+        unsigned char bad_char = (unsigned char)s->data[shift + len - 1];
+        shift += table[bad_char];
+    }
 
-    return s;
+    return -1;
 }

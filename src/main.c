@@ -12,10 +12,8 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    string* s = strnew("red is color");
-    printf("s: %s\n", s->data);
-    erase(s, 3, 3);
-    printf("s: %s\n", s->data);
+    string* needle = strnew("ball");
+    printf("pos of ball: %zu\n", find(str, needle));
 
     strfree(str);
 

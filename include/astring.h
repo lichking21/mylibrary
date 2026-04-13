@@ -23,8 +23,8 @@ void pushback(string*, char);
 void popback(string*);
 
 void clear(string*);
-
 int empty(const string*);
+string* erase(string*, size_t pos, size_t len);
 
 // Elements accesess
 const char* at(const string*, size_t);
@@ -38,6 +38,6 @@ size_t copy(string*, char*, size_t, size_t);
 int compareall(const string*, const string*);
 int compare(string*, size_t, size_t, string*);
 
-string* erase(string*, size_t pos, size_t len);
+size_t find(string*, string*);
 
 #endif
