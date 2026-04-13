@@ -72,6 +72,27 @@ void append(string* s1, const string* s2) {
     s1->size = new_size;
     s1->data[s1->size] = '\0';
 }
+string* insert(string* s, const char* str, size_t pos) {
+    if (!s || !s->data || !str || pos > s->size) return NULL;
+
+    size_t new_size = s->size + strlen(str);
+    if (new_size + 1 > s->capacity) {
+        size_t new_capacity = (s->capacity == 0) ? new_size + 1 : s->capacity * 2;
+
+        char* temp = (char*)realloc(s->data, new_capacity);
+        if (temp == NULL) return NULL;
+
+        s->data = temp;
+        s->capacity = new_capacity;
+    }
+
+    memcpy(&s->data[pos], str, strlen(str));
+
+    s->size = new_size;
+    s->data[s->size] = '\0';
+
+    return s;
+}
 
 void pushback(string* s, char val) {
     if (s == NULL || s->data == NULL) return;
@@ -156,7 +177,6 @@ size_t copy(string* s, char* dest, size_t len, size_t pos) {
 
     return len;
 }
-
 int compareall(const string* s1, const string* s2) {
     if (s1 == s2) return 0;
 
@@ -176,7 +196,6 @@ int compareall(const string* s1, const string* s2) {
 
     return 0;
 }
-
 int compare(string* s1, size_t pos, size_t len, string* s2) {
     if (s1 == NULL || s1->data == NULL) return -1;
     if (s2 == NULL || s2->data == NULL) return 1;
@@ -197,7 +216,7 @@ int compare(string* s1, size_t pos, size_t len, string* s2) {
     return 0;
 }
 
-size_t find(string* s, string* needle) {
+size_t find(const string* s, const string* needle) {
     if (!s || !s->data) return -1;
     if (needle->size == 0 || !needle || !needle->data) return 0;
     if (s->size < needle->size) return -1;
@@ -226,3 +245,4 @@ size_t find(string* s, string* needle) {
 
     return -1;
 }
+

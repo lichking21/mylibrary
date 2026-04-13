@@ -12,8 +12,10 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    string* needle = strnew("ball");
-    printf("pos of ball: %zu\n", find(str, needle));
+    string* s = strnew("ya ");
+    insert(s, "pidoras", 3);
+
+    printf("%s\n", s->data);
 
     strfree(str);
 

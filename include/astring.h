@@ -18,6 +18,7 @@ void strfree(string*);
 size_t length(string*);
 
 void append(string*, const string*);
+string* insert(string*, const char*, size_t pos);
 
 void pushback(string*, char);
 void popback(string*);
@@ -34,10 +35,9 @@ const char* begin(const string*);
 const char* end(const string*);
 
 size_t copy(string*, char*, size_t, size_t);
-
 int compareall(const string*, const string*);
 int compare(string*, size_t, size_t, string*);
 
-size_t find(string*, string*);
+size_t find(const string*, const string*);
 
 #endif
