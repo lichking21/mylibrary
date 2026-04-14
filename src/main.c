@@ -12,12 +12,14 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    resize(str, str->size + 5);
-    printf("string data: %s\n", str->data);
-    printf("string size: %zu\n", str->size);
-    printf("string capasity: %zu\n\n", str->capacity);
+    string* s = strnew("Yaaa");
+
+    printf("string data: %s\n", s->data);
+    printf("string size: %zu\n", s->size);
+    printf("string capasity: %zu\n\n", s->capacity);
 
     strfree(str);
+    strfree(s);
 
     return 0;
 }

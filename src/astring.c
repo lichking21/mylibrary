@@ -293,6 +293,22 @@ size_t rfind(const string* s, const string* needle) {
 
     return -1;
 }
+string* substr(const string* s, size_t pos, size_t len) {
+    if (!s || !s->data || pos > s->size) return NULL;
+    if (len > s->size - pos)
+        len = s->size - pos;
+
+    char* temp = (char*)malloc(len + 1);
+    if (!temp) return NULL;
+
+    memcpy(temp, s->data + pos, len);
+    temp[len] = '\0';
+
+    string* res = strnew(temp);
+    free(temp);
+
+    return res;
+}
 
 string* replace(string* s, size_t pos, size_t len, const string* str) {
     if (!s || !s->data || !str || !str->data) return NULL;
@@ -300,7 +316,9 @@ string* replace(string* s, size_t pos, size_t len, const string* str) {
 
     size_t new_size = s->size - len + str->size;
     if (new_size + 1 > s->capacity) {
-        size_t new_capacity = (s->capacity == 0) ? new_size + 1 : s->capacity * 2;
+        size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
+        if (new_capacity < new_size + 1)
+            new_capacity = new_size + 1;
 
         char* temp = (char*)realloc(s->data, new_capacity);
         if (!temp) return NULL;
@@ -318,4 +336,3 @@ string* replace(string* s, size_t pos, size_t len, const string* str) {
 
     return src;
 }
-
