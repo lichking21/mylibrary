@@ -336,3 +336,10 @@ string* replace(string* s, size_t pos, size_t len, const string* str) {
 
     return src;
 }
+void swap(string* s1, string* s2) {
+    if (!s1 || !s1->data || !s2 || !s2->data) return;
+
+    string temp = *s1;
+    *s1 = *s2;
+    *s2 = temp;
+}

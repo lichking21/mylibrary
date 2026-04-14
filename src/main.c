@@ -12,14 +12,16 @@ int main() {
     printf("string size: %zu\n", str->size);
     printf("string capasity: %zu\n\n", str->capacity);
 
-    string* s = strnew("Yaaa");
-
-    printf("string data: %s\n", s->data);
-    printf("string size: %zu\n", s->size);
-    printf("string capasity: %zu\n\n", s->capacity);
-
+    string* s1 = strnew("hui");
+    string* s2 = strnew("chlen");
+    printf("before swap: ");
+    printf("s1 = %s, s2 = %s\n", s1->data, s2->data);
+    swap(s1, s2);
+    printf("after swap: ");
+    printf("s1 = %s, s2 = %s\n", s1->data, s2->data);
+    
     strfree(str);
-    strfree(s);
+
 
     return 0;
 }

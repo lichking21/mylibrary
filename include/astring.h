@@ -44,5 +44,6 @@ size_t rfind(const string*, const string*);
 string* substr(const string*, size_t, size_t);
 
 string* replace(string*, size_t, size_t, const string*);
+void swap(string*, string*);
 
 #endif
