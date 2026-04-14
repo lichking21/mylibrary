@@ -50,6 +50,26 @@ size_t length(string* s) {
     
     return len;
 }
+void resize(string* s, size_t new_size) {
+    if (!s || !s->data || s->size == new_size) return;
+
+    if (new_size + 1 > s->capacity) {
+        size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
+        if (new_capacity < new_size + 1) 
+            new_capacity = new_size + 1;
+
+        char* temp = (char*)realloc(s->data, new_capacity);
+        if (!temp) return;
+
+        s->data = temp;
+        s->capacity = new_capacity;
+    }
+    if (new_size > s->size) 
+        memset(s->data + s->size, '\0', new_size - s->size);
+
+    s->size = new_size;
+    s->data[s->size] = '\0';
+}
 
 void append(string* s1, const string* s2) {
     if (s1 == NULL || s2 == NULL) return;
@@ -98,7 +118,7 @@ void pushback(string* s, char val) {
     if (s == NULL || s->data == NULL) return;
 
     if (s->size + 2 > s->capacity) {
-        size_t new_capacity = (s->capacity == 0) ? 0 : s->capacity * 2;
+        size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
         
         char* temp = (char*)realloc(s->data, new_capacity);
         if (temp == NULL) return;
@@ -274,7 +294,6 @@ size_t rfind(const string* s, const string* needle) {
     return -1;
 }
 
-
 string* replace(string* s, size_t pos, size_t len, const string* str) {
     if (!s || !s->data || !str || !str->data) return NULL;
     if (pos > s->size) return NULL;
@@ -299,3 +318,4 @@ string* replace(string* s, size_t pos, size_t len, const string* str) {
 
     return src;
 }
+

@@ -16,6 +16,7 @@ void strfree(string*);
 
 // ========== Capacity & Size
 size_t length(string*);
+void resize(string*, size_t);
 
 void append(string*, const string*);
 string* insert(string*, const char*, size_t pos);
