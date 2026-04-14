@@ -245,6 +245,35 @@ size_t find(const string* s, const string* needle) {
 
     return -1;
 }
+size_t rfind(const string* s, const string* needle) {
+    if (!s || !s->data) return -1;
+    if (needle->size == 0 || !needle || !needle->data) return 0;
+    if (s->size < needle->size) return -1;
+
+    size_t table[256];
+    size_t len = needle->size;
+
+    for (int i = 0; i < 256; i++)
+        table[i] = len;
+
+    for (size_t i = len - 1; i >= 1; i--)
+        table[(unsigned char)needle->data[i]] = i;
+
+    size_t shift = s->size - len;
+    while (shift > 0) {
+        size_t i = 0;
+        while (needle->data[i] == s->data[shift + i]) {
+            if (i == len) return shift;
+            i++;
+        }
+
+        unsigned char bad_char = (unsigned char)s->data[shift];
+        shift -= table[bad_char];
+    }
+
+    return -1;
+}
+
 
 string* replace(string* s, size_t pos, size_t len, const string* str) {
     if (!s || !s->data || !str || !str->data) return NULL;

@@ -39,6 +39,7 @@ int compareall(const string*, const string*);
 int compare(string*, size_t, size_t, string*);
 
 size_t find(const string*, const string*);
+size_t rfind(const string*, const string*);
 
 string* replace(string*, size_t, size_t, const string*);
 
