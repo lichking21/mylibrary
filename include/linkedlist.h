@@ -1,12 +1,14 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-typedef struct {
+typedef struct Node {
     void* data;
-    Node* next;
+    struct Node* next;
 }Node;
 
-Node* newnode(void* data);
-void binsert(Node* node);
+Node* newnode(void*);
+void printlist(Node*);
+
+void binsert(Node**, void*);
 
 #endif
