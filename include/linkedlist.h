@@ -7,5 +7,6 @@ typedef struct {
 }Node;
 
 Node* newnode(void* data);
+void binsert(Node* node);
 
 #endif

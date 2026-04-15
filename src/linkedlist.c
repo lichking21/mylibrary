@@ -10,3 +10,8 @@ Node* newnode(void* data) {
 
     return node;
 }
+
+void binsert(Node* head, void* data) {
+    Node* n = newnode(data);
+    n->next = head;
+}
