@@ -13,4 +13,6 @@ void binsert(Node**, void*);
 void insertafter(Node*, void*);
 void einsert(Node*, void*);
 
+void keyremove(Node**, void*);
+
 #endif

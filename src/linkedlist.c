@@ -57,3 +57,26 @@ void einsert(Node* head, void* data) {
         }
     }
 }
+
+void keyremove(Node** head, void* key) {
+    if (!head || !key) return;
+
+    Node* curr = *head;
+    Node* prev = NULL;
+
+    if (curr && curr->data == key) {
+        *head = curr->next;
+        free(curr);
+        return;
+    }
+
+    while (curr && curr->data != key) {        
+        prev = curr;
+        curr = curr->next;
+    }
+
+    if (!curr) return;
+
+    prev->next = curr->next;
+    free(curr);
+}

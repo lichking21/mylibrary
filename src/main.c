@@ -19,7 +19,7 @@ int main() {
 
     printlist(head);
 
-    einsert(head, "MVP");
+    keyremove(&head, s2->data);
     printlist(head);
 
     return 0;
