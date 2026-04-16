@@ -19,8 +19,12 @@ int main() {
 
     printlist(head);
 
-    keyremove(&head, s2->data);
+    keyremove(&head, "52", NULL, cmpstr);
     printlist(head);
+
+    strfree(s1);
+    strfree(s2);
+    strfree(s3);
 
     return 0;
 }

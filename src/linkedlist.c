@@ -1,6 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "linkedlist.h"
+
+int cmpstr(void* s1, void* s2) {
+    return strcmp((char*)s1, (char*)s2);
+}
+int cmpint(void* v1, void* v2) {
+    int val1 = *(int*)v1;
+    int val2 = *(int*)v2;
+
+    if (val1 == val2) return 0;
+    return (val1 < val2) ? -1 : 1;
+}
 
 Node* newnode(void* data) {
     Node* node = (Node*)malloc(sizeof(Node));
@@ -58,19 +70,22 @@ void einsert(Node* head, void* data) {
     }
 }
 
-void keyremove(Node** head, void* key) {
+void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void*, void*)) {
     if (!head || !key) return;
 
     Node* curr = *head;
     Node* prev = NULL;
 
-    if (curr && curr->data == key) {
+    if (curr && cmp(curr->data, key) == 0) {
         *head = curr->next;
+
+        if (free_data) free_data(curr->data);
+
         free(curr);
         return;
     }
 
-    while (curr && curr->data != key) {        
+    while (curr && cmp(curr->data, key) != 0) {        
         prev = curr;
         curr = curr->next;
     }
