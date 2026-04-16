@@ -10,5 +10,6 @@ Node* newnode(void*);
 void printlist(Node*);
 
 void binsert(Node**, void*);
+void insertafter(Node*, void*);
 
 #endif

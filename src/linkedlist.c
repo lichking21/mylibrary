@@ -32,3 +32,11 @@ void binsert(Node** head, void* data) {
     n->next = *head;
     *head = n;
 }
+void insertafter(Node* prev, void* data) {
+    if (!prev || !data) return;
+
+    Node* new = newnode(data);
+
+    new->next = prev->next;
+    prev->next = new;
+}

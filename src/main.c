@@ -11,9 +11,13 @@ int main() {
     string* s3 = strnew("NGG");
 
     Node* head = newnode(s1->data);
-    head->next = newnode(s2->data);
-    head->next->next = newnode(s3->data);
+    Node* n2 = newnode(s2->data);
+    Node* n3 = newnode(s3->data);
 
+    head->next = n2;
+    n2->next = n3;
+
+    insertafter(n2, "MVP");
     printlist(head);
 
     return 0;
