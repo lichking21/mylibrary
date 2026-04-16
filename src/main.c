@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "astring.h"
 #include "linkedlist.h"
 
 int main() {
@@ -19,12 +18,9 @@ int main() {
 
     printlist(head);
 
-    keyremove(&head, "52", NULL, cmpstr);
+    destroylist(&head, NULL);
+    
     printlist(head);
-
-    strfree(s1);
-    strfree(s2);
-    strfree(s3);
 
     return 0;
 }

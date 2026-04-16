@@ -7,17 +7,21 @@ typedef struct Node {
     struct Node* next;
 }Node;
 
-// To compare data types 
+// ======== Help functions ========
 int cmpstr(void*, void*);
 int cmpint(void*, void*);
 
+// ======== Memory control ========
 Node* newnode(void*);
-void printlist(Node*);
+void keyremove(Node**, void*, void (void*), int (void*, void*));
+void destroylist(Node **, void (void*));
 
+// ======== Nodes control ========
 void binsert(Node**, void*);
 void insertafter(Node*, void*);
-void einsert(Node*, void*);
+void lpushback(Node*, void*);
 
-void keyremove(Node**, void*, void (void*), int (void*, void*));
+// ======== Utilities ========
+void printlist(Node*);
 
 #endif

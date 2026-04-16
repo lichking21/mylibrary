@@ -3,6 +3,7 @@
 #include <string.h>
 #include "linkedlist.h"
 
+// ======== Help functions ========
 int cmpstr(void* s1, void* s2) {
     return strcmp((char*)s1, (char*)s2);
 }
@@ -14,6 +15,7 @@ int cmpint(void* v1, void* v2) {
     return (val1 < val2) ? -1 : 1;
 }
 
+// ======== Memory control ========
 Node* newnode(void* data) {
     Node* node = (Node*)malloc(sizeof(Node));
     if (!node) return NULL;
@@ -23,55 +25,8 @@ Node* newnode(void* data) {
 
     return node;
 }
-
-void printlist(Node* head) {
-    if (!head) return;
-
-    Node* curr = head;
-    while(curr) {
-        printf("%s", (char*)curr->data);
-        if (curr->next) printf(" ==> ");
-
-        curr = curr->next;
-    }
-
-    printf("\n\n");
-}
-
-void binsert(Node** head, void* data) {
-    if (!head || !data) return;
-
-    Node* n = newnode(data);
-    n->next = *head;
-    *head = n;
-}
-void insertafter(Node* prev, void* data) {
-    if (!prev || !data) return;
-
-    Node* n = newnode(data);
-
-    n->next = prev->next;
-    prev->next = n;
-}
-void einsert(Node* head, void* data) {
-    if (!head || !data) return;
-
-    Node* n = newnode(data);
-    Node* curr = head;
-
-    while(curr) {
-        curr = curr->next;
-
-        if (curr->next == NULL) {
-            curr->next = n;
-            n->next = NULL;
-            break;
-        }
-    }
-}
-
 void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void*, void*)) {
-    if (!head || !key) return;
+    if (!head || !*head || !key) return;
 
     Node* curr = *head;
     Node* prev = NULL;
@@ -94,4 +49,65 @@ void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void
 
     prev->next = curr->next;
     free(curr);
+}
+void destroylist(Node** head, void (*free_data)(void*)) {
+    if (!head || !*head) return;
+
+    Node* curr = *head;
+
+    while (curr) {
+        Node* next = curr->next;
+        if (free_data) free_data(curr->data);
+
+        free(curr->data);
+        curr = next;
+    }
+}
+
+// ======== Nodes control ========
+void binsert(Node** head, void* data) {
+    if (!head || !data) return;
+
+    Node* n = newnode(data);
+    n->next = *head;
+    *head = n;
+}
+void insertafter(Node* prev, void* data) {
+    if (!prev || !data) return;
+
+    Node* n = newnode(data);
+
+    n->next = prev->next;
+    prev->next = n;
+}
+void lpushback(Node* head, void* data) {
+    if (!head || !data) return;
+
+    Node* n = newnode(data);
+    Node* curr = head;
+
+    while(curr) {
+        curr = curr->next;
+
+        if (curr->next == NULL) {
+            curr->next = n;
+            n->next = NULL;
+            break;
+        }
+    }
+}
+
+// ======== Utilities ========
+void printlist(Node* head) {
+    if (!head) return;
+
+    Node* curr = head;
+    while(curr) {
+        printf("%s", (char*)curr->data);
+        if (curr->next) printf(" ==> ");
+
+        curr = curr->next;
+    }
+
+    printf("\n\n");
 }
