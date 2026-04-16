@@ -11,6 +11,7 @@ Node* newnode(void* data) {
 
     return node;
 }
+
 void printlist(Node* head) {
     if (!head) return;
 
@@ -35,8 +36,24 @@ void binsert(Node** head, void* data) {
 void insertafter(Node* prev, void* data) {
     if (!prev || !data) return;
 
-    Node* new = newnode(data);
+    Node* n = newnode(data);
 
-    new->next = prev->next;
-    prev->next = new;
+    n->next = prev->next;
+    prev->next = n;
+}
+void einsert(Node* head, void* data) {
+    if (!head || !data) return;
+
+    Node* n = newnode(data);
+    Node* curr = head;
+
+    while(curr) {
+        curr = curr->next;
+
+        if (curr->next == NULL) {
+            curr->next = n;
+            n->next = NULL;
+            break;
+        }
+    }
 }

@@ -17,7 +17,9 @@ int main() {
     head->next = n2;
     n2->next = n3;
 
-    insertafter(n2, "MVP");
+    printlist(head);
+
+    einsert(head, "MVP");
     printlist(head);
 
     return 0;
