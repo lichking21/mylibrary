@@ -5,7 +5,7 @@ Currently, the project features **`astring`** — a C-implementation of a dynami
 ## 📦 Data Structures Roadmap
 - [x] **`astring`** (Dynamic Strings)
 - [ ] *[Vector / Dynamic Array] - planned*
-- [ ] *[Linked List] - planned*
+- [x] **`linkedlist`** (Generic Singly Linked List)
 - [ ] *[Hash Map] - planned*
 
 ---
@@ -42,6 +42,39 @@ int main() {
     // Always free to prevent memory leaks
     strfree(name);
     strfree(str);
+
+    return 0;
+}
+
+## 🔗 `linkedlist` Module
+
+### Key Features
+* **Type-Agnostic (Generic):** Stores any data type via `void*` payload, allowing for polymorphic lists.
+* **Smart Memory Management:** Injection of custom destructor callbacks (`void (void*)`) in `destroylist` and popping operations prevents memory leaks of heap-allocated payloads.
+* **Safe Pattern Matching:** Uses function pointers for comparators (`int (void*, void*)`) to ensure accurate node lookup in `lfind` and `keyremove`.
+* **In-Place Operations:** Zero-allocation utilities like $O(N)$ `lreverse` manipulate pointers directly without touching the heap.
+
+### Quick Start
+
+```c
+#include <stdio.h>
+#include "linkedlist.h"
+
+int main() {
+    Node* head = NULL;
+
+    // Population
+    binsert(&head, "First");
+    lpushback(head, "Second");
+
+    // Access & Utilities
+    printf("List size: %zu\n", llength(head));
+    
+    void* val = lpopback(&head);
+    if (val) printf("Popped: %s\n", (char*)val);
+
+    // Always free the container (pass NULL if payload isn't heap-allocated)
+    destroylist(&head, NULL);
 
     return 0;
 }
