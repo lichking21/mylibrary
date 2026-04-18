@@ -3,18 +3,6 @@
 #include <string.h>
 #include "linkedlist.h"
 
-// ======== Help functions ========
-int cmpstr(void* s1, void* s2) {
-    return strcmp((char*)s1, (char*)s2);
-}
-int cmpint(void* v1, void* v2) {
-    int val1 = *(int*)v1;
-    int val2 = *(int*)v2;
-
-    if (val1 == val2) return 0;
-    return (val1 < val2) ? -1 : 1;
-}
-
 // ======== Memory control ========
 Node* newnode(void* data) {
     Node* node = (Node*)malloc(sizeof(Node));
@@ -123,6 +111,19 @@ void* lat(Node* head, size_t idx) {
 }
 
 // ======== Utilities ========
+size_t llength(Node* head) {
+    if (!head) return 0;
+
+    Node* curr = head;
+    size_t size = 0;
+
+    while(curr) {
+        curr = curr->next;
+        size++;
+    }
+
+    return size;
+}
 void printlist(Node* head) {
     if (!head) return;
 
@@ -135,4 +136,14 @@ void printlist(Node* head) {
     }
 
     printf("\n\n");
+}
+int cmpstr(void* s1, void* s2) {
+    return strcmp((char*)s1, (char*)s2);
+}
+int cmpint(void* v1, void* v2) {
+    int val1 = *(int*)v1;
+    int val2 = *(int*)v2;
+
+    if (val1 == val2) return 0;
+    return (val1 < val2) ? -1 : 1;
 }

@@ -18,9 +18,8 @@ int main() {
 
     printlist(head);
 
-    size_t i = 1;
-    char* res = (char*)lat(head, i);
-    printf("lat res: %s\n", res);
+    size_t i = llength(head);
+    printf("list size: %ld\n", i);
 
     return 0;
 }

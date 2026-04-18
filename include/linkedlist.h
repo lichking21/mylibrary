@@ -7,10 +7,6 @@ typedef struct Node {
     struct Node* next;
 }Node;
 
-// ======== Help functions ========
-int cmpstr(void*, void*);
-int cmpint(void*, void*);
-
 // ======== Memory control ========
 Node* newnode(void*);
 void keyremove(Node**, void*, void (void*), int (void*, void*));
@@ -26,6 +22,9 @@ Node* lfind(Node*, void*, int (void*, void*));
 void* lat(Node*, size_t);
 
 // ======== Utilities ========
+size_t llength(Node*);
 void printlist(Node*);
+int cmpstr(void*, void*);
+int cmpint(void*, void*);
 
 #endif
