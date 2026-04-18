@@ -18,8 +18,9 @@ int main() {
 
     printlist(head);
 
-    Node* reversed = lreverse(&head);
-    printlist(reversed);
+    char* head_data = (char*)lpopfront(&head, NULL);
+    printf("prev head: %s\n", head_data);
+    printf("curr head: %s\n", (char*)head->data);
 
     return 0;
 }

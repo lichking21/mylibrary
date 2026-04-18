@@ -128,6 +128,18 @@ void* lat(Node* head, size_t idx) {
 
     return curr_node->data;
 }
+void* lpopfront(Node** head, void (*free_data)(void*)) {
+    if (!head || !*head) return NULL;
+
+    Node* temp = *head;
+    void* data = temp->data;
+    *head = (*head)->next;
+
+    if (free_data) free_data(temp->data);
+    free(temp);
+
+    return data;
+}
 
 // ======== Utilities ========
 size_t llength(Node* head) {
