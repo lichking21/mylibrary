@@ -18,8 +18,8 @@ int main() {
 
     printlist(head);
 
-    size_t i = llength(head);
-    printf("list size: %ld\n", i);
+    Node* reversed = lreverse(&head);
+    printlist(reversed);
 
     return 0;
 }

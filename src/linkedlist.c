@@ -84,6 +84,25 @@ void lpushback(Node* head, void* data) {
         }
     }
 }
+Node* lreverse(Node** head) {
+    if (!head || !*head) return NULL;
+
+    Node* curr = *head;
+    Node* prev = NULL;
+    Node* next = NULL;
+
+    while(curr) {
+        next = curr->next;
+        curr->next = prev;
+
+        prev = curr;
+        curr = next;
+    }
+
+    *head = prev;
+
+    return *head;
+}
 
 // ======== Nodes access ========
 Node* lfind(Node* head, void* key, int (*cmp)(void*, void*)) {

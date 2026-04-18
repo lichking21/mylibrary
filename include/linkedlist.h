@@ -16,6 +16,7 @@ void destroylist(Node **, void (void*));
 void binsert(Node**, void*);
 void insertafter(Node*, void*);
 void lpushback(Node*, void*);
+Node* lreverse(Node**);
 
 // ======== Nodes access ========
 Node* lfind(Node*, void*, int (void*, void*));
