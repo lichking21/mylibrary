@@ -97,6 +97,18 @@ void lpushback(Node* head, void* data) {
     }
 }
 
+// ======== Nodes access ========
+Node* lfind(Node* head, void* key, int (*cmp)(void*, void*)) {
+    if (!head || !key || !cmp) return NULL;
+
+    Node* curr = head;
+    while (curr && cmp(curr->data, key) != 0) {
+        curr = curr->next;
+    }
+
+    return curr;
+}
+
 // ======== Utilities ========
 void printlist(Node* head) {
     if (!head) return;

@@ -21,6 +21,9 @@ void binsert(Node**, void*);
 void insertafter(Node*, void*);
 void lpushback(Node*, void*);
 
+// ======== Nodes access ========
+Node* lfind(Node*, void*, int (void*, void*));
+
 // ======== Utilities ========
 void printlist(Node*);
 

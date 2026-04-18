@@ -18,9 +18,13 @@ int main() {
 
     printlist(head);
 
-    destroylist(&head, NULL);
+    binsert(&head, "MVP");
     
     printlist(head);
+    
+    Node* n = lfind(head, "MVP", cmpstr);
+    if (n) printf("find res: %s\n", (char*)n->data);
+    else printf("couldn't find value in list\n");
 
     return 0;
 }
