@@ -108,6 +108,19 @@ Node* lfind(Node* head, void* key, int (*cmp)(void*, void*)) {
 
     return curr;
 }
+void* lat(Node* head, size_t idx) {
+    if (!head) return NULL;
+
+    Node* curr_node = head;
+    size_t curr_idx = 0;
+
+    while (curr_idx != idx) {
+        curr_node = curr_node->next;
+        curr_idx++;
+    }
+
+    return curr_node->data;
+}
 
 // ======== Utilities ========
 void printlist(Node* head) {

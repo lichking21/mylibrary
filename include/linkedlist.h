@@ -23,6 +23,7 @@ void lpushback(Node*, void*);
 
 // ======== Nodes access ========
 Node* lfind(Node*, void*, int (void*, void*));
+void* lat(Node*, size_t);
 
 // ======== Utilities ========
 void printlist(Node*);
