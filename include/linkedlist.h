@@ -21,7 +21,8 @@ Node* lreverse(Node**);
 // ======== Nodes access ========
 Node* lfind(Node*, void*, int (void*, void*));
 void* lat(Node*, size_t);
-void* lpopfront(Node** head, void (void*));
+void* lpopfront(Node**);
+void* lpopback(Node**);
 
 // ======== Utilities ========
 size_t llength(Node*);

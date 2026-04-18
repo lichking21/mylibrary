@@ -18,9 +18,17 @@ int main() {
 
     printlist(head);
 
-    char* head_data = (char*)lpopfront(&head, NULL);
-    printf("prev head: %s\n", head_data);
-    printf("curr head: %s\n", (char*)head->data);
+    char* last = (char*)lpopback(&head);
+    if (last) printf("last val: %s\n", last);
+    else printf("couldn't get last node");
+
+    printlist(head);
+
+    char* last2 = (char*)lpopback(&head);
+    if (last2) printf("last val: %s\n", last2);
+    else printf("couldn't get last node");
+
+    printlist(head);
 
     return 0;
 }

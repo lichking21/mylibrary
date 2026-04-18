@@ -128,15 +128,34 @@ void* lat(Node* head, size_t idx) {
 
     return curr_node->data;
 }
-void* lpopfront(Node** head, void (*free_data)(void*)) {
+void* lpopfront(Node** head) {
     if (!head || !*head) return NULL;
 
     Node* temp = *head;
     void* data = temp->data;
     *head = (*head)->next;
 
-    if (free_data) free_data(temp->data);
     free(temp);
+
+    return data;
+}
+void* lpopback(Node** head) {
+    if (!head || !*head) return NULL;
+
+    Node* curr = *head;
+    Node* prev = NULL;
+
+    while (curr->next != NULL) {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    void* data = curr->data;
+    
+    if (!prev) *head = NULL;
+    else prev->next = NULL;
+
+    free(curr);
 
     return data;
 }
