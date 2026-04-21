@@ -9,6 +9,8 @@ typedef struct {
     size_t elem_size;
 }vector;
 
+// ========== Memory management ==========
 vector* vecnew(size_t, size_t);
+void vecfree(vector*);
 
 #endif

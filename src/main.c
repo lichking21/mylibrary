@@ -9,10 +9,13 @@ int main() {
     size_t capacity = 8;
 
     vector* vec = vecnew(elem_size, capacity);
-    if (vec)
-        printf("vector was created\n");
-    else
-        printf("(ERR) >> failed to create vector");
+    if (vec) printf("vector was created\n");
+    else printf("(ERR) >> failed to create vector");
+
+    vecfree(vec);
+    vec = NULL;
+    if (!vec) printf("vector was removed\n");
+    else printf("vector still lives\n");
 
     return 0;
 }
