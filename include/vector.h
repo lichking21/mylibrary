@@ -13,4 +13,7 @@ typedef struct {
 vector* vecnew(size_t, size_t);
 void vecfree(vector*);
 
+// ========== Capacity & Size ==========
+void vpushback(vector*, void*);
+
 #endif

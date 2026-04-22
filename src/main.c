@@ -5,17 +5,17 @@
 
 int main() {
     
-    size_t elem_size = sizeof(int);
+    size_t elem_size = sizeof(char*);
     size_t capacity = 8;
 
     vector* vec = vecnew(elem_size, capacity);
     if (vec) printf("vector was created\n");
     else printf("(ERR) >> failed to create vector");
 
-    vecfree(vec);
-    vec = NULL;
-    if (!vec) printf("vector was removed\n");
-    else printf("vector still lives\n");
+    char* c = "FRIENDLY";
+
+    vpushback(vec, c);
+    printf("vec elem: %s\n", (char*)vec->data);
 
     return 0;
 }
