@@ -15,5 +15,6 @@ void vecfree(vector*);
 
 // ========== Capacity & Size ==========
 void vpushback(vector*, void*);
+void vpopback(vector*);
 
 #endif

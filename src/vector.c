@@ -56,3 +56,8 @@ void vpushback(vector* vec, void* data) {
     memcpy(addr, data, vec->elem_size);
     vec->size++;
 }
+void vpopback(vector* vec) {
+    if (!vec || !vec->data) return;
+
+    vec->size--;
+}
