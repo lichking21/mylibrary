@@ -20,10 +20,13 @@ int main() {
     vpushback(vec, &c2);
     vpushback(vec, &c3);
     char** ngg = (char**)vec->data;
+    for (size_t i = 0; i < vec->size; i++) 
+        printf("elem[%ld]: %s\n", i, ngg[i]);
 
-    printf("size of vector: %ld\n", veclen(vec));
-
-    for (size_t i = 0; i < vec->size; i++) printf("elem[%ld]: %s\n", i, ngg[i]);
+    char* begin = *(char**)vbegin(vec);
+    char* end = *(char**)vend(vec);
+    
+    printf("begin:%s    end:%s\n", begin, end);
 
     return 0;
 }

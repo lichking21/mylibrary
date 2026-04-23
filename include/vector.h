@@ -22,6 +22,7 @@ void vassign(vector*, vector*);
 // ========== Elements access ==========
 void vpushback(vector*, void*);
 void vpopback(vector*);
-size_t vbegin(vector*);
+void* vbegin(vector*);
+void* vend(vector*);
 
 #endif

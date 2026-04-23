@@ -70,7 +70,12 @@ void vpopback(vector* vec) {
     vec->size--;
 }
 void* vbegin(vector* vec) {
-    if (!vec || !vec->data) return -1;
+    if (!vec || !vec->data) return NULL;
 
     return vec->data; 
+}
+void* vend(vector* vec) {
+    if (!vec || !vec->data) return NULL;
+
+    return (char*)vec->data + (vec->size * vec->elem_size);
 }
