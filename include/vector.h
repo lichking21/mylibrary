@@ -14,6 +14,7 @@ vector* vecnew(size_t, size_t);
 void vecfree(vector*);
 
 // ========== Capacity & Size ==========
+size_t veclen(vector*);
 void vpushback(vector*, void*);
 void vpopback(vector*);
 

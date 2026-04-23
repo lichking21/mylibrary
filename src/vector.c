@@ -37,6 +37,11 @@ void vecfree(vector* vec) {
 }
 
 // ========== Capacity & Size ==========
+size_t veclen(vector* vec) {
+    if (!vec || !vec->data || vec->size == 0) return 0;
+
+    return vec->size;
+}
 void vpushback(vector* vec, void* data) {
     if (!vec || !data) return;
 
