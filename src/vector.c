@@ -6,8 +6,13 @@
 static void* getaddr(vector* vec, size_t idx) {
     return (char*)vec->data + (idx * vec->elem_size);
 }
+size_t veclen(vector* vec) {
+    if (!vec || !vec->data || vec->size == 0) return 0;
 
-// ========== Memory management ==========
+    return vec->size;
+}
+
+// ========== Memory control ==========
 vector* vecnew(size_t elem_size, size_t init_capacity) {
     vector* vec = (vector*)malloc(sizeof(vector));
     if (!vec) return NULL;
@@ -36,12 +41,10 @@ void vecfree(vector* vec) {
     free(vec);
 }
 
-// ========== Capacity & Size ==========
-size_t veclen(vector* vec) {
-    if (!vec || !vec->data || vec->size == 0) return 0;
+// ========== Elements control ==========
 
-    return vec->size;
-}
+
+// ========== Elements access ==========
 void vpushback(vector* vec, void* data) {
     if (!vec || !data) return;
 
@@ -65,4 +68,9 @@ void vpopback(vector* vec) {
     if (!vec || !vec->data) return;
 
     vec->size--;
+}
+void* vbegin(vector* vec) {
+    if (!vec || !vec->data) return -1;
+
+    return vec->data; 
 }

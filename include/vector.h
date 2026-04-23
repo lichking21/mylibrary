@@ -9,13 +9,19 @@ typedef struct {
     size_t elem_size;
 }vector;
 
-// ========== Memory management ==========
+// ========== Memory control ==========
 vector* vecnew(size_t, size_t);
 void vecfree(vector*);
 
-// ========== Capacity & Size ==========
+// ========== Utilities ==========
 size_t veclen(vector*);
+
+// ========== Elements access ==========
+void vassign(vector*, vector*);
+
+// ========== Elements access ==========
 void vpushback(vector*, void*);
 void vpopback(vector*);
+size_t vbegin(vector*);
 
 #endif
