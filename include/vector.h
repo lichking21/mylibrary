@@ -16,8 +16,8 @@ void vecfree(vector*);
 // ========== Utilities ==========
 size_t veclen(vector*);
 
-// ========== Elements access ==========
-void vassign(vector*, vector*);
+// ========== Elements control ==========
+void vassign(vector*, void*, void*);
 
 // ========== Elements access ==========
 void vpushback(vector*, void*);

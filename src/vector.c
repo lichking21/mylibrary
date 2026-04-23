@@ -42,7 +42,24 @@ void vecfree(vector* vec) {
 }
 
 // ========== Elements control ==========
+void vassign(vector* dest, void* src_start, void* src_end) {
+    if (!dest || !src_start || !src_end) return;
 
+    size_t src_size = (char*)src_end - (char*)src_start;
+    size_t items_count = src_size / dest->elem_size;
+    
+    if (items_count > dest->capacity) {
+        void* temp = realloc(dest->data, items_count * dest->elem_size);
+        if (!temp) return;
+
+        dest->data = temp;
+        dest->capacity = items_count;
+    }
+
+    memcpy(dest->data, src_start, src_size);
+    
+    dest->size = items_count;
+}
 
 // ========== Elements access ==========
 void vpushback(vector* vec, void* data) {
