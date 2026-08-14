@@ -21,8 +21,10 @@ size_t vcapacity(vector*);
 void vassign(vector*, void*, void*);
 void vpushback(vector*, void*);
 void vpopback(vector*);
+void vclear(vector*);
 
 // ========== Elements access ==========
+void* vdata(vector*);
 void* vbegin(vector*);
 void* vend(vector*);
 

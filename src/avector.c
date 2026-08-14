@@ -89,12 +89,23 @@ void vpopback(vector* vec) {
 
     vec->size--;
 }
+void vclear(vector* vec) {
+    if (vec->size == 0 || vec->capacity == 0) return;
+
+    while (vec->size != 0)
+        vpopback(vec);
+}
 
 // ========== Elements access ==========
+void* vdata(vector* vec) {
+    if (vec->size == 0 || vec->capacity == 0 || vec->data == 0) return NULL;
+
+    return vec->data;
+}
 void* vbegin(vector* vec) {
     if (!vec || !vec->data) return NULL;
 
-    return vec->data;
+    return vdata(vec);
 }
 void* vend(vector* vec) {
     if (!vec || !vec->data) return NULL;
