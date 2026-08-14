@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "linkedlist.h"
+#include "alinkedlist.h"
 
 // ======== Memory control ========
 Node* newnode(void* data) {
@@ -28,7 +28,7 @@ void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void
         return;
     }
 
-    while (curr && cmp(curr->data, key) != 0) {        
+    while (curr && cmp(curr->data, key) != 0) {
         prev = curr;
         curr = curr->next;
     }
@@ -151,7 +151,7 @@ void* lpopback(Node** head) {
     }
 
     void* data = curr->data;
-    
+
     if (!prev) *head = NULL;
     else prev->next = NULL;
 

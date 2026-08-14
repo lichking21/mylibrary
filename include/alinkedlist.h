@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef ALINKEDLIST_H
+#define ALINKEDLIST_H
 #include "astring.h"
 
 typedef struct Node {

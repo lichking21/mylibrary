@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef AVECTOR_H
+#define AVECTOR_H
 #include <stddef.h>
 
 typedef struct {

@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "avector.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,7 +19,7 @@ vector* vecnew(size_t elem_size, size_t init_capacity) {
 
     size_t capacity = (init_capacity == 0) ? 16 : init_capacity;
 
-    vec->data = malloc(capacity * elem_size); 
+    vec->data = malloc(capacity * elem_size);
     if (!vec->data) return NULL;
 
     vec->size = 0;
@@ -47,7 +47,7 @@ void vassign(vector* dest, void* src_start, void* src_end) {
 
     size_t src_size = (char*)src_end - (char*)src_start;
     size_t items_count = src_size / dest->elem_size;
-    
+
     if (items_count > dest->capacity) {
         void* temp = realloc(dest->data, items_count * dest->elem_size);
         if (!temp) return;
@@ -57,7 +57,7 @@ void vassign(vector* dest, void* src_start, void* src_end) {
     }
 
     memcpy(dest->data, src_start, src_size);
-    
+
     dest->size = items_count;
 }
 
@@ -89,7 +89,7 @@ void vpopback(vector* vec) {
 void* vbegin(vector* vec) {
     if (!vec || !vec->data) return NULL;
 
-    return vec->data; 
+    return vec->data;
 }
 void* vend(vector* vec) {
     if (!vec || !vec->data) return NULL;
