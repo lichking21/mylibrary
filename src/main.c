@@ -20,16 +20,17 @@ int main() {
     vpushback(vec, &c2);
     vpushback(vec, &c3);
 
+    char** ngg = (char**)vdata(vec);
+
+    for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
+    printf("\n");
+
     // New functions use example
 
-    char** data = (char**)vdata(vec);
-    char** begin = (char**)vbegin(vec);
-
-    for (size_t i = 0; i < vec->size; i++) {
-        printf("Value at index %zu: %s\n", i, data[i]);
+    if (!vempty(vec)) {
+        verase(vec, 1, 2);
+        for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
     }
-
-    printf("vbegin: %s", *begin);
 
     printf("\n");
     return 0;

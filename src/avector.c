@@ -1,6 +1,7 @@
 #include "avector.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 // ========== Utilities ==========
 static void* getaddr(vector* vec, size_t idx) {
@@ -15,6 +16,12 @@ size_t vcapacity(vector* vec) {
     if (!vec || !vec->data || vec->capacity == 0) return 0;
 
     return vec->capacity;
+}
+bool vempty(vector* vec) {
+    if (vec->size != 0)
+        return false;
+
+    return true;
 }
 
 // ========== Memory control ==========
@@ -94,6 +101,18 @@ void vclear(vector* vec) {
 
     while (vec->size != 0)
         vpopback(vec);
+}
+vector* verase(vector* vec, size_t first, size_t last) {
+    if (vec->size == 0 || vec->capacity == 0) return NULL;
+    if (first > vec->size) return NULL;
+    if (last == 0) return 0;
+
+    for (size_t i = first; i <= last; i++) {
+        vec[i].data = NULL;
+        vec->size--;
+    }
+
+    return vec;
 }
 
 // ========== Elements access ==========
