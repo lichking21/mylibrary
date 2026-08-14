@@ -14,14 +14,15 @@ vector* vecnew(size_t, size_t);
 void vecfree(vector*);
 
 // ========== Utilities ==========
-size_t veclen(vector*);
+size_t vsize(vector*);
+size_t vcapacity(vector*);
 
 // ========== Elements control ==========
 void vassign(vector*, void*, void*);
-
-// ========== Elements access ==========
 void vpushback(vector*, void*);
 void vpopback(vector*);
+
+// ========== Elements access ==========
 void* vbegin(vector*);
 void* vend(vector*);
 

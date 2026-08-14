@@ -6,10 +6,15 @@
 static void* getaddr(vector* vec, size_t idx) {
     return (char*)vec->data + (idx * vec->elem_size);
 }
-size_t veclen(vector* vec) {
+size_t vsize(vector* vec) {
     if (!vec || !vec->data || vec->size == 0) return 0;
 
     return vec->size;
+}
+size_t vcapacity(vector* vec) {
+    if (!vec || !vec->data || vec->capacity == 0) return 0;
+
+    return vec->capacity;
 }
 
 // ========== Memory control ==========
@@ -60,8 +65,6 @@ void vassign(vector* dest, void* src_start, void* src_end) {
 
     dest->size = items_count;
 }
-
-// ========== Elements access ==========
 void vpushback(vector* vec, void* data) {
     if (!vec || !data) return;
 
@@ -86,6 +89,8 @@ void vpopback(vector* vec) {
 
     vec->size--;
 }
+
+// ========== Elements access ==========
 void* vbegin(vector* vec) {
     if (!vec || !vec->data) return NULL;
 
