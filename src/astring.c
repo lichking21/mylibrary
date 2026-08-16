@@ -9,12 +9,12 @@
 // ========== Memory management
 string* strnew(const char* s) {
     string* str = malloc(sizeof(string));
-    if (str == NULL) 
+    if (str == NULL)
         return NULL;
-        
+
     size_t size = strlen(s);
     size_t capacity = size + 1;
-    
+
     str->data = malloc(size + 1);
     for (size_t i = 0; i <= size; i++)
         str->data[i] = s[i];
@@ -36,7 +36,7 @@ void strfree(string* s) {
 
     s->size = 0;
     s->capacity = 0;
-    
+
     free(s);
 }
 
@@ -47,7 +47,7 @@ size_t length(string* s) {
         len++;
         s++;
     }
-    
+
     return len;
 }
 void resize(string* s, size_t new_size) {
@@ -55,7 +55,7 @@ void resize(string* s, size_t new_size) {
 
     if (new_size + 1 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
-        if (new_capacity < new_size + 1) 
+        if (new_capacity < new_size + 1)
             new_capacity = new_size + 1;
 
         char* temp = (char*)realloc(s->data, new_capacity);
@@ -64,7 +64,7 @@ void resize(string* s, size_t new_size) {
         s->data = temp;
         s->capacity = new_capacity;
     }
-    if (new_size > s->size) 
+    if (new_size > s->size)
         memset(s->data + s->size, '\0', new_size - s->size);
 
     s->size = new_size;
@@ -79,7 +79,7 @@ void append(string* s1, const string* s2) {
 
     if (new_size + 1 > s1->capacity) {
         size_t new_capacity = (s1->capacity == 0) ? new_size + 1 : s1->capacity * 2;
-        
+
         char* temp = (char*)realloc(s1->data, new_capacity);
         if (temp == NULL) return;
 
@@ -119,7 +119,7 @@ void pushback(string* s, char val) {
 
     if (s->size + 2 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
-        
+
         char* temp = (char*)realloc(s->data, new_capacity);
         if (temp == NULL) return;
 
@@ -133,7 +133,7 @@ void pushback(string* s, char val) {
 }
 void popback(string* s) {
     if (s == NULL || s->data == NULL) return;
-    
+
     s->size--;
     s->data[s->size] = '\0';
 }
@@ -240,7 +240,7 @@ size_t find(const string* s, const string* needle) {
     if (!s || !s->data) return -1;
     if (needle->size == 0 || !needle || !needle->data) return 0;
     if (s->size < needle->size) return -1;
-    
+
     size_t table[256];
     size_t len = needle->size;
 
@@ -249,7 +249,7 @@ size_t find(const string* s, const string* needle) {
 
     for (size_t i = 0; i < len - 1; i++)
         table[(unsigned char)needle->data[i]] = len - 1 - i;
-        
+
     size_t shift = 0;
     while (shift <= s->size - len) {
 
