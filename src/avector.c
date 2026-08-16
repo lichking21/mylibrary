@@ -9,23 +9,22 @@ static void* getaddr(vector* vec, size_t idx) {
     return (char*)vec->data + (idx * vec->elem_size);
 }
 size_t vsize(vector* vec) {
-    if (!vec || !vec->data || vec->size == 0) return 0;
+    assert(vec != NULL || vec->data != NULL || vec->size != 0);
 
     return vec->size;
 }
 size_t vcapacity(vector* vec) {
-    if (!vec || !vec->data || vec->capacity == 0) return 0;
+    assert(vec != NULL || vec->data != NULL || vec->capacity != 0);
 
     return vec->capacity;
 }
 bool vempty(vector* vec) {
-    if (vec->size != 0)
-        return false;
+    assert(vec != NULL || vec->data != NULL || vec->size != 0);
 
     return true;
 }
 size_t vmax_size(vector* vec) {
-    if (!vec || vec->size == 0 || vec->capacity == 0) return 0;
+    assert(vec != NULL || vec->data != NULL || vec->capacity != 0);
 
     return vec->capacity;
 }
@@ -47,7 +46,7 @@ vector* vecnew(size_t elem_size, size_t init_capacity) {
     return vec;
 }
 void vecfree(vector* vec) {
-    if (!vec) return;
+    assert(vec != NULL);
 
     free(vec->data);
 
@@ -58,24 +57,25 @@ void vecfree(vector* vec) {
 
     free(vec);
 }
-void vreserve(vector* vec, size_t size) {
-    if (!vec || vec->capacity > size) return;
+int vreserve(vector* vec, size_t size) {
+    assert(vec != NULL || vec->capacity < size);
 
     size_t newCapacity = (vec->capacity == 0) ? size : vec->capacity + size;
 
     void* temp = realloc(vec->data, newCapacity * vec->elem_size);
-    if (temp == NULL) return;
+    if (temp == NULL) return 0;
 
     vec->data = temp;
     vec->capacity = newCapacity;
 
+    return 1;
 }
-void vresize(vector* vec, size_t n) {
-    if (!vec) return;
+int vresize(vector* vec, size_t n) {
+    assert(vec != NULL);
 
     if (n < vec->size) {
         vec->size = n;
-        return;
+        return 0;
     }
 
     if (n > vec->size) {
@@ -84,7 +84,7 @@ void vresize(vector* vec, size_t n) {
             while (newCapacity < n) newCapacity *= 2;
 
             void* temp = realloc(vec->data, newCapacity * vec->elem_size);
-            if (temp == NULL) return;
+            if (temp == NULL) return 0;
 
             vec->data = temp;
             vec->capacity = newCapacity;
@@ -99,18 +99,19 @@ void vresize(vector* vec, size_t n) {
 
         vec->size = n;
     }
+    return 0;
 }
 
 // ========== Elements control ==========
-void vassign(vector* dest, void* src_start, void* src_end) {
-    if (!dest || !src_start || !src_end) return;
+int vassign(vector* dest, void* src_start, void* src_end) {
+    assert(dest != NULL || src_start != NULL || src_end != NULL);
 
     size_t src_size = (char*)src_end - (char*)src_start;
     size_t items_count = src_size / dest->elem_size;
 
     if (items_count > dest->capacity) {
         void* temp = realloc(dest->data, items_count * dest->elem_size);
-        if (!temp) return;
+        if (!temp) return 0;
 
         dest->data = temp;
         dest->capacity = items_count;
@@ -119,15 +120,17 @@ void vassign(vector* dest, void* src_start, void* src_end) {
     memcpy(dest->data, src_start, src_size);
 
     dest->size = items_count;
+
+    return 1;
 }
-void vpush_back(vector* vec, void* data) {
-    if (!vec || !data) return;
+int vpush_back(vector* vec, void* data) {
+    assert (vec != NULL || data != NULL);
 
     if (vec->size + 1 > vec->capacity) {
         size_t new_capacity = (vec->capacity == 0) ? 16 : vec->capacity * 2;
 
         void* temp = realloc(vec->data, new_capacity * vec->elem_size);
-        if (!temp) return;
+        if (!temp) return 0;
 
         vec->data = temp;
         vec->capacity = new_capacity;
@@ -138,14 +141,16 @@ void vpush_back(vector* vec, void* data) {
 
     memcpy(addr, data, vec->elem_size);
     vec->size++;
+
+    return 1;
 }
 void vpop_back(vector* vec) {
-    if (!vec || !vec->data) return;
+    assert (vec != NULL || vec->data != NULL);
 
     vec->size--;
 }
 void vclear(vector* vec) {
-    if (vec->size == 0 || vec->capacity == 0) return;
+   assert(vec != NULL || vec->size != 0 || vec->capacity != 0);
 
     while (vec->size != 0)
         vpop_back(vec);
@@ -170,14 +175,14 @@ vector* verase(vector* vec, size_t first, size_t last) {
 
     return vec;
 }
-void vinsert(vector* vec, size_t pos, void* elem) {
-    if (!vec || !elem || pos > vec->size) return;
+int vinsert(vector* vec, size_t pos, void* elem) {
+    assert(vec != NULL || elem != NULL || pos < vec->size);
 
     if (vec->size == vec->capacity) {
         size_t newCapacity = (vec->capacity == 0) ? 1 : vec->capacity * 2;
 
         void* temp = realloc(vec->data, newCapacity * vec->elem_size);
-        if (temp == NULL) return;
+        if (temp == NULL) return 0;
 
         vec->data = temp;
         vec->capacity = newCapacity;
@@ -196,9 +201,11 @@ void vinsert(vector* vec, size_t pos, void* elem) {
     memcpy(dest, elem, vec->elem_size);
 
     vec->size++;
+
+    return 1;
 }
 void vswap(vector* vec, vector* x) {
-    if (!vec || !x || !vec->data || !x->data) return;
+    assert(vec != NULL || vec->data != NULL || x != NULL || x->data != NULL);
 
    vector temp = *vec;
    *vec = *x;
@@ -207,21 +214,23 @@ void vswap(vector* vec, vector* x) {
 
 // ========== Elements access ==========
 void* vdata(vector* vec) {
-    if (vec->size == 0 || vec->capacity == 0 || vec->data == 0) return NULL;
+    assert(vec != NULL || vec->data != NULL ||vec->size != 0 || vec->capacity != 0);
 
     return vec->data;
 }
 void* vbegin(vector* vec) {
-    if (!vec || !vec->data) return NULL;
+    assert(vec != NULL || vec->data != NULL);
 
     return vdata(vec);
 }
 void* vend(vector* vec) {
-    if (!vec || !vec->data) return NULL;
+    assert(vec != NULL || vec->data != NULL);
 
     return (char*)vec->data + (vec->size * vec->elem_size);
 }
 void* vfront(vector* vec) {
+    assert(vec != NULL || vec->data != NULL);
+
     void** data = vdata(vec);
 
     return data[0];
