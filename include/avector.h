@@ -11,30 +11,30 @@ typedef struct {
 }vector;
 
 // ========== Memory control ==========
-vector* vecnew(size_t, size_t);
-void vecfree(vector*);
-void vreserve(vector*, size_t);
-void vresize(vector*, size_t elemsNum);
+vector* avec_new(size_t, size_t);
+void avec_free(vector*);
+int avec_reserve(vector*, size_t);
+int avec_resize(vector*, size_t elemsNum);
 
 // ========== Utilities ==========
-size_t vsize(vector*);
-size_t vcapacity(vector*);
-bool vempty(vector*);
-size_t vmax_size(vector*);
+size_t avec_size(vector*);
+size_t avec_capacity(vector*);
+bool avec_empty(vector*);
+size_t avec_max_size(vector*);
 
 // ========== Elements control ==========
-void vassign(vector*, void*, void*);
-void vpush_back(vector*, void*);
-void vpop_back(vector*);
-void vclear(vector*);
-vector* verase(vector*, size_t, size_t);
-void vinsert(vector*, size_t, void*);
-void vswap(vector*, vector*);
+int avec_assign(vector*, void*, void*);
+int avec_push_back(vector*, void*);
+void avec_pop_back(vector*);
+void avec_clear(vector*);
+vector* avec_erase(vector*, size_t, size_t);
+int avec_insert(vector*, size_t, void*);
+void avec_swap(vector*, vector*);
 
 // ========== Elements access ==========
-void* vdata(vector*);
-void* vbegin(vector*);
-void* vend(vector*);
-void* vfront(vector*);
+void* avec_data(vector*);
+void* avec_begin(vector*);
+void* avec_end(vector*);
+void* avec_front(vector*);
 
 #endif
