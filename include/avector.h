@@ -21,8 +21,8 @@ bool vempty(vector*);
 
 // ========== Elements control ==========
 void vassign(vector*, void*, void*);
-void vpushback(vector*, void*);
-void vpopback(vector*);
+void vpush_back(vector*, void*);
+void vpop_back(vector*);
 void vclear(vector*);
 vector* verase(vector*, size_t, size_t);
 void vinsert(vector*, size_t, void*);

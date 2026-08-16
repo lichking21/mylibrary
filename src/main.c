@@ -16,9 +16,9 @@ int main() {
     char* c2 = "THUGG";
     char* c3 = "52";
 
-    vpushback(vec, &c);
-    vpushback(vec, &c2);
-    vpushback(vec, &c3);
+    vpush_back(vec, &c);
+    vpush_back(vec, &c2);
+    vpush_back(vec, &c3);
 
     char** ngg = (char**)vdata(vec);
 

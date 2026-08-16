@@ -72,7 +72,7 @@ void vassign(vector* dest, void* src_start, void* src_end) {
 
     dest->size = items_count;
 }
-void vpushback(vector* vec, void* data) {
+void vpush_back(vector* vec, void* data) {
     if (!vec || !data) return;
 
     if (vec->size + 1 > vec->capacity) {
@@ -91,7 +91,7 @@ void vpushback(vector* vec, void* data) {
     memcpy(addr, data, vec->elem_size);
     vec->size++;
 }
-void vpopback(vector* vec) {
+void vpop_back(vector* vec) {
     if (!vec || !vec->data) return;
 
     vec->size--;
@@ -100,7 +100,7 @@ void vclear(vector* vec) {
     if (vec->size == 0 || vec->capacity == 0) return;
 
     while (vec->size != 0)
-        vpopback(vec);
+        vpop_back(vec);
 }
 vector* verase(vector* vec, size_t first, size_t last) {
     if (vec->size == 0 || vec->capacity == 0) return NULL;
