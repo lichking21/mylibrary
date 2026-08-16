@@ -1,13 +1,14 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+#include <assert.h>
 #include "astring.h"
 
 #include <stdio.h>
 
 
 // ========== Memory management
-string* strnew(const char* s) {
+string* astr_new(const char* s) {
     string* str = malloc(sizeof(string));
     if (str == NULL)
         return NULL;
@@ -25,7 +26,7 @@ string* strnew(const char* s) {
     return str;
 }
 
-void strfree(string* s) {
+void astr_free(string* s) {
     if (s == NULL)
         return;
 
@@ -41,7 +42,9 @@ void strfree(string* s) {
 }
 
 // ========== Capacity & Size
-size_t length(string* s) {
+size_t astr_length(string* s) {
+    assert(s != NULL || s->data != NULL);
+
     size_t len = 0;
     while (*s->data != '\0') {
         len++;
@@ -50,8 +53,8 @@ size_t length(string* s) {
 
     return len;
 }
-void resize(string* s, size_t new_size) {
-    if (!s || !s->data || s->size == new_size) return;
+int astr_resize(string* s, size_t new_size) {
+    assert(s != NULL || s->data != NULL || s->size != new_size);
 
     if (new_size + 1 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
@@ -59,7 +62,7 @@ void resize(string* s, size_t new_size) {
             new_capacity = new_size + 1;
 
         char* temp = (char*)realloc(s->data, new_capacity);
-        if (!temp) return;
+        if (!temp) return 0;
 
         s->data = temp;
         s->capacity = new_capacity;
@@ -69,11 +72,12 @@ void resize(string* s, size_t new_size) {
 
     s->size = new_size;
     s->data[s->size] = '\0';
+
+    return 1;
 }
 
-void append(string* s1, const string* s2) {
-    if (s1 == NULL || s2 == NULL) return;
-    if (s2->data == NULL || s2->size == 0) return;
+int astr_append(string* s1, const string* s2) {
+    assert(s1 != NULL || s2 != NULL || s1->data != NULL || s2->data != NULL);
 
     size_t new_size = s1->size + s2->size;
 
@@ -81,7 +85,7 @@ void append(string* s1, const string* s2) {
         size_t new_capacity = (s1->capacity == 0) ? new_size + 1 : s1->capacity * 2;
 
         char* temp = (char*)realloc(s1->data, new_capacity);
-        if (temp == NULL) return;
+        if (temp == NULL) return 0;
 
         s1->data = temp;
         s1->capacity = new_capacity;
@@ -91,9 +95,11 @@ void append(string* s1, const string* s2) {
 
     s1->size = new_size;
     s1->data[s1->size] = '\0';
+
+    return 1;
 }
-string* insert(string* s, const char* str, size_t pos) {
-    if (!s || !s->data || !str || pos > s->size) return NULL;
+string* astr_insert(string* s, const char* str, size_t pos) {
+    assert(s != NULL || s->data != NULL || str != NULL || pos < s->size);
 
     size_t new_size = s->size + strlen(str);
     if (new_size + 1 > s->capacity) {
@@ -114,14 +120,14 @@ string* insert(string* s, const char* str, size_t pos) {
     return s;
 }
 
-void pushback(string* s, char val) {
-    if (s == NULL || s->data == NULL) return;
+int astr_push_back(string* s, char val) {
+    assert(s != NULL || s->data != NULL);
 
     if (s->size + 2 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
 
         char* temp = (char*)realloc(s->data, new_capacity);
-        if (temp == NULL) return;
+        if (temp == NULL) return 0;
 
         s->data = temp;
         s->capacity = new_capacity;
@@ -130,30 +136,32 @@ void pushback(string* s, char val) {
     s->data[s->size] = val;
     s->size++;
     s->data[s->size] = '\0';
+
+    return 1;
 }
-void popback(string* s) {
-    if (s == NULL || s->data == NULL) return;
+void astr_pop_back(string* s) {
+    assert(s != NULL || s->data != NULL);
 
     s->size--;
     s->data[s->size] = '\0';
 }
 
-void clear(string* s) {
-    if (s == NULL || s->data == NULL) return;
+void astr_clear(string* s) {
+    assert(s != NULL || s->data != NULL);
 
     while(s->size != 0)
-        popback(s);
+        astr_pop_back(s);
 }
 
-int empty(const string* s) {
-    if (s == NULL || s->data == NULL || s->size == 0)
-        return 1;
+int astr_empty(const string* s) {
+    assert(s != NULL || s->data != NULL);
 
-    return 0;
+    if (s->size == 0) return 0;
+
+    return 1;
 }
-string* erase(string* s, size_t pos, size_t len) {
-    if (s == NULL || s->data == NULL) return NULL;
-    if (pos > s->size) return NULL;
+string* astr_erase(string* s, size_t pos, size_t len) {
+    assert(s != NULL || s->data != NULL || pos > s->size);
 
     if (len > s->size - pos) len = s->size - pos;
     if (len == 0) return s;
@@ -170,24 +178,30 @@ string* erase(string* s, size_t pos, size_t len) {
 }
 
 // ========== Elements accesess
-const char* at(const string* s, size_t pos) {
-    if (s == NULL || s->data == NULL || pos >= s->size) return NULL;
+const char* astr_at(const string* s, size_t pos) {
+    assert (s != NULL || s->data != NULL || pos <= s->size);
 
     return &s->data[pos];
 }
 
-const char* back(const string* s) {
+const char* astr_back(const string* s) {
+    assert(s != NULL || s->data != NULL);
+
     return &s->data[s->size - 1];
 }
-const char* begin(const string* s) {
+const char* astr_begin(const string* s) {
+    assert(s != NULL || s->data != NULL);
+
     return s->data;
 }
-const char* end(const string* s) {
+const char* astr_end(const string* s) {
+    assert(s != NULL || s->data != NULL);
+
     return &s->data[s->size];
 }
 
-size_t copy(string* s, char* dest, size_t len, size_t pos) {
-    if (s == NULL || s->data == NULL) return 0;
+size_t astr_copy(string* s, char* dest, size_t len, size_t pos) {
+    assert(s != NULL || s->data != NULL);
 
     for (size_t i = 0; i < len; i++) {
         dest[i] = s->data[pos++];
@@ -197,11 +211,11 @@ size_t copy(string* s, char* dest, size_t len, size_t pos) {
 
     return len;
 }
-int compareall(const string* s1, const string* s2) {
-    if (s1 == s2) return 0;
-
+int astr_compare_all(const string* s1, const string* s2) {
     if (s1 == NULL || s1->data == NULL) return -1;
     if (s2 == NULL || s2->data == NULL) return 1;
+
+    if (s1 == s2) return 0;
 
     size_t len1 = s1->size;
     size_t len2 = s2->size;
@@ -216,7 +230,7 @@ int compareall(const string* s1, const string* s2) {
 
     return 0;
 }
-int compare(string* s1, size_t pos, size_t len, string* s2) {
+int astr_compare(string* s1, size_t pos, size_t len, string* s2) {
     if (s1 == NULL || s1->data == NULL) return -1;
     if (s2 == NULL || s2->data == NULL) return 1;
 
@@ -236,7 +250,7 @@ int compare(string* s1, size_t pos, size_t len, string* s2) {
     return 0;
 }
 
-size_t find(const string* s, const string* needle) {
+size_t astr_find(const string* s, const string* needle) {
     if (!s || !s->data) return -1;
     if (needle->size == 0 || !needle || !needle->data) return 0;
     if (s->size < needle->size) return -1;
@@ -265,7 +279,7 @@ size_t find(const string* s, const string* needle) {
 
     return -1;
 }
-size_t rfind(const string* s, const string* needle) {
+size_t astr_rfind(const string* s, const string* needle) {
     if (!s || !s->data) return -1;
     if (needle->size == 0 || !needle || !needle->data) return 0;
     if (s->size < needle->size) return -1;
@@ -293,10 +307,9 @@ size_t rfind(const string* s, const string* needle) {
 
     return -1;
 }
-string* substr(const string* s, size_t pos, size_t len) {
-    if (!s || !s->data || pos > s->size) return NULL;
-    if (len > s->size - pos)
-        len = s->size - pos;
+string* astr_substr(const string* s, size_t pos, size_t len) {
+    assert(s != NULL || s->data != NULL || pos < s->size);
+    if (len > s->size - pos)    len = s->size - pos;
 
     char* temp = (char*)malloc(len + 1);
     if (!temp) return NULL;
@@ -304,15 +317,14 @@ string* substr(const string* s, size_t pos, size_t len) {
     memcpy(temp, s->data + pos, len);
     temp[len] = '\0';
 
-    string* res = strnew(temp);
+    string* res = astr_new(temp);
     free(temp);
 
     return res;
 }
 
-string* replace(string* s, size_t pos, size_t len, const string* str) {
-    if (!s || !s->data || !str || !str->data) return NULL;
-    if (pos > s->size) return NULL;
+string* astr_replace(string* s, size_t pos, size_t len, const string* str) {
+    assert(s != NULL || s->data != NULL || str != NULL || str->data != NULL || pos < s->size);
 
     size_t new_size = s->size - len + str->size;
     if (new_size + 1 > s->capacity) {
@@ -336,8 +348,8 @@ string* replace(string* s, size_t pos, size_t len, const string* str) {
 
     return src;
 }
-void swap(string* s1, string* s2) {
-    if (!s1 || !s1->data || !s2 || !s2->data) return;
+void astr_swap(string* s1, string* s2) {
+    assert(s1 != NULL || s1->data != NULL || s2 != NULL || s2->data != NULL);
 
     string temp = *s1;
     *s1 = *s2;
