@@ -48,6 +48,7 @@ void destroylist(Node** head, void (*free_data)(void*)) {
         if (free_data) free_data(curr->data);
 
         free(curr->data);
+        free(curr);
         curr = next;
     }
 }

@@ -1,6 +1,6 @@
 #ifndef ALINKEDLIST_H
 #define ALINKEDLIST_H
-#include "astring.h"
+#include <stdio.h>
 
 typedef struct Node {
     void* data;
@@ -9,7 +9,7 @@ typedef struct Node {
 
 // ======== Memory control ========
 Node* newnode(void*);
-void keyremove(Node**, void*, void (void*), int (void*, void*));
+void keyremove(Node**, void*, void (*) (void*), int (void*, void*));
 void destroylist(Node **, void (void*));
 
 // ======== Nodes control ========
