@@ -114,6 +114,33 @@ vector* verase(vector* vec, size_t first, size_t last) {
 
     return vec;
 }
+void vinsert(vector* vec, size_t pos, void* elem) {
+    if (!vec || !elem || pos > vec->size) return;
+
+    if (vec->size == vec->capacity) {
+        size_t newCapacity = (vec->capacity == 0) ? 1 : vec->capacity * 2;
+
+        void* temp = realloc(vec->data, newCapacity * vec->elem_size);
+        if (temp == NULL) return;
+
+        vec->data = temp;
+        vec->capacity = newCapacity;
+    }
+
+    char* base = (char*)vec->data;
+    char* dest = base + (pos * vec->elem_size);
+
+    if (pos < vec->size) {
+        char* tail = base + ((pos + 1) * vec->elem_size);
+        size_t itemsToMove = vec->size - pos;
+
+        memmove(tail, dest, itemsToMove * vec->elem_size);
+    }
+
+    memcpy(dest, elem, vec->elem_size);
+
+    vec->size++;
+}
 
 // ========== Elements access ==========
 void* vdata(vector* vec) {
@@ -130,4 +157,9 @@ void* vend(vector* vec) {
     if (!vec || !vec->data) return NULL;
 
     return (char*)vec->data + (vec->size * vec->elem_size);
+}
+void* vfront(vector* vec) {
+    void** data = vdata(vec);
+
+    return data[0];
 }

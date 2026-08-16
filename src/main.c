@@ -26,11 +26,9 @@ int main() {
     printf("\n");
 
     // New functions use example
-
-    if (!vempty(vec)) {
-        verase(vec, 1, 2);
-        for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
-    }
+    char* c4 = "NGG";
+    vinsert(vec, 2, &c4);
+    for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
 
     printf("\n");
     return 0;

@@ -25,10 +25,12 @@ void vpushback(vector*, void*);
 void vpopback(vector*);
 void vclear(vector*);
 vector* verase(vector*, size_t, size_t);
+void vinsert(vector*, size_t, void*);
 
 // ========== Elements access ==========
 void* vdata(vector*);
 void* vbegin(vector*);
 void* vend(vector*);
+void* vfront(vector*);
 
 #endif
