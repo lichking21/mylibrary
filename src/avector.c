@@ -23,6 +23,11 @@ bool vempty(vector* vec) {
 
     return true;
 }
+size_t vmax_size(vector* vec) {
+    if (!vec || vec->size == 0 || vec->capacity == 0) return 0;
+
+    return vec->capacity;
+}
 
 // ========== Memory control ==========
 vector* vecnew(size_t elem_size, size_t init_capacity) {
@@ -51,6 +56,18 @@ void vecfree(vector* vec) {
     vec->elem_size = 0;
 
     free(vec);
+}
+void vreserve(vector* vec, size_t size) {
+    if (!vec || vec->capacity > size) return;
+
+    size_t newCapacity = (vec->capacity == 0) ? size : vec->capacity + size;
+
+    void* temp = realloc(vec->data, newCapacity);
+    if (temp == NULL) return;
+
+    vec->data = temp;
+    vec->capacity = newCapacity;
+
 }
 
 // ========== Elements control ==========

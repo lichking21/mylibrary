@@ -26,9 +26,11 @@ int main() {
     printf("\n");
 
     // New functions use example
-    char* c4 = "NGG";
-    vinsert(vec, 2, &c4);
-    for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
+    printf("Max capacity: %ld\n", vmax_size(vec));
+
+    size_t n = 10;
+    vreserve(vec, n);
+    printf("New max capacity: %ld", vmax_size(vec));
 
     printf("\n");
     return 0;

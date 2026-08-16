@@ -13,11 +13,13 @@ typedef struct {
 // ========== Memory control ==========
 vector* vecnew(size_t, size_t);
 void vecfree(vector*);
+void vreserve(vector*, size_t);
 
 // ========== Utilities ==========
 size_t vsize(vector*);
 size_t vcapacity(vector*);
 bool vempty(vector*);
+size_t vmax_size(vector*);
 
 // ========== Elements control ==========
 void vassign(vector*, void*, void*);
