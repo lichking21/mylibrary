@@ -1,6 +1,7 @@
 #include "avector.h"
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <stdbool.h>
 
 // ========== Utilities ==========
@@ -150,14 +151,22 @@ void vclear(vector* vec) {
         vpop_back(vec);
 }
 vector* verase(vector* vec, size_t first, size_t last) {
-    if (vec->size == 0 || vec->capacity == 0) return NULL;
-    if (first > vec->size) return NULL;
-    if (last == 0) return 0;
+    assert(vec != NULL && vec->data != NULL);
 
-    for (size_t i = first; i <= last; i++) {
-        vec[i].data = NULL;
-        vec->size--;
-    }
+    if (first >= vec->size || first >= last) return vec;
+    if (last > vec->size)    last = vec->size;
+
+    char* base = (char*)vec->data;
+    char* dest = base + (first * vec->elem_size);
+    char* src = base + (last * vec->elem_size);
+
+    size_t elemsToMove = vec->size - last;
+    size_t bytesToMove = elemsToMove * vec->elem_size;
+
+    if (bytesToMove > 0)
+        memmove(dest, src, bytesToMove);
+
+    vec->size -= (last - first);
 
     return vec;
 }
