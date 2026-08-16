@@ -9,8 +9,6 @@ int main() {
     size_t capacity = 8;
 
     vector* vec = vecnew(elem_size, capacity);
-    if (vec) printf("vector was created\n");
-    else printf("(ERR) >> failed to create vector");
 
     char* c = "FRIENDLY";
     char* c2 = "THUGG";
@@ -22,15 +20,37 @@ int main() {
 
     char** ngg = (char**)vdata(vec);
 
+    printf("Vec1 content: ");
     for (size_t i = 0; i < vec->size; i++) printf("%s ", ngg[i]);
     printf("\n");
 
-    // New functions use example
-    printf("Max capacity: %ld\n", vmax_size(vec));
+    vector* vec2 = vecnew(sizeof(char*), 8);
+    char* cc = "TUN";
+    char* cc2 = "TUN";
+    char* cc3 = "SAHUR";
 
-    size_t n = 20;
-    vresize(vec, n);
-    printf("New max capacity: %ld", vmax_size(vec));
+    vpush_back(vec2, &cc);
+    vpush_back(vec2, &cc2);
+    vpush_back(vec2, &cc3);
+
+    char** tts = (char**)vdata(vec2);
+
+    printf("Vec2 content: ");
+    for (size_t i = 0; i < vec2->size; i++) printf("%s ", tts[i]);
+    printf("\n");
+
+    // New functions use example
+    vswap(vec, vec2);
+    char** newvec = (char**)vdata(vec);
+
+    printf("Vec1 content: ");
+    for (size_t i = 0; i < vec->size; i++) printf("%s ", newvec[i]);
+    printf("\n");
+
+    char** newvec2 = (char**)vdata(vec2);
+    printf("Vec2 content: ");
+    for (size_t i = 0; i < vec2->size; i++) printf("%s ", newvec2[i]);
+    printf("\n");
 
     printf("\n");
     return 0;

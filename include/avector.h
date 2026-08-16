@@ -29,6 +29,7 @@ void vpop_back(vector*);
 void vclear(vector*);
 vector* verase(vector*, size_t, size_t);
 void vinsert(vector*, size_t, void*);
+void vswap(vector*, vector*);
 
 // ========== Elements access ==========
 void* vdata(vector*);

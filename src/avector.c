@@ -188,6 +188,13 @@ void vinsert(vector* vec, size_t pos, void* elem) {
 
     vec->size++;
 }
+void vswap(vector* vec, vector* x) {
+    if (!vec || !x || !vec->data || !x->data) return;
+
+   vector temp = *vec;
+   *vec = *x;
+   *x = temp;
+}
 
 // ========== Elements access ==========
 void* vdata(vector* vec) {
