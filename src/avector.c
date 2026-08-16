@@ -62,12 +62,42 @@ void vreserve(vector* vec, size_t size) {
 
     size_t newCapacity = (vec->capacity == 0) ? size : vec->capacity + size;
 
-    void* temp = realloc(vec->data, newCapacity);
+    void* temp = realloc(vec->data, newCapacity * vec->elem_size);
     if (temp == NULL) return;
 
     vec->data = temp;
     vec->capacity = newCapacity;
 
+}
+void vresize(vector* vec, size_t n) {
+    if (!vec) return;
+
+    if (n < vec->size) {
+        vec->size = n;
+        return;
+    }
+
+    if (n > vec->size) {
+        if (n > vec->capacity) {
+            size_t newCapacity = (vec->capacity == 0) ? n : vec->capacity;
+            while (newCapacity < n) newCapacity *= 2;
+
+            void* temp = realloc(vec->data, newCapacity * vec->elem_size);
+            if (temp == NULL) return;
+
+            vec->data = temp;
+            vec->capacity = newCapacity;
+        }
+
+        char* base = (char*)vec->data;
+        char* newElemStart = base + (vec->size * vec->elem_size);
+
+        size_t newBytesToAdd = (n - vec->size) * vec->elem_size;
+
+        memset(newElemStart, 0, newBytesToAdd);
+
+        vec->size = n;
+    }
 }
 
 // ========== Elements control ==========

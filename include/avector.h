@@ -14,6 +14,7 @@ typedef struct {
 vector* vecnew(size_t, size_t);
 void vecfree(vector*);
 void vreserve(vector*, size_t);
+void vresize(vector*, size_t elemsNum);
 
 // ========== Utilities ==========
 size_t vsize(vector*);

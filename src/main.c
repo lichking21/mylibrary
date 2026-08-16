@@ -28,8 +28,8 @@ int main() {
     // New functions use example
     printf("Max capacity: %ld\n", vmax_size(vec));
 
-    size_t n = 10;
-    vreserve(vec, n);
+    size_t n = 20;
+    vresize(vec, n);
     printf("New max capacity: %ld", vmax_size(vec));
 
     printf("\n");
