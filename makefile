@@ -1,12 +1,12 @@
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Iinclude
+CFLAGS = -g -Wall -Wextra -I./include
 SRC = src
 OBJ = obj
 BIN = bin
 TARGET = $(BIN)/app
 
 SRCS = $(wildcard $(SRC)/*.c)
-OBJS = $(patsubst $(SRC)/%c, $(OBJ)/%o, $(SRCS))
+OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
 .PHONY: all clean
 

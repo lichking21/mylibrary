@@ -14,9 +14,9 @@ Node* al_newnode(void* data) {
 
     return node;
 }
-void al_keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void*, void*)) {
+int al_keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(const void*, const void*)) {
     assert(head != NULL && key != NULL && cmp != NULL);
-    if (head == NULL || *head == NULL || key == NULL || cmp == NULL) return;
+    if (head == NULL || *head == NULL || key == NULL || cmp == NULL) return -1;
 
     Node* curr = *head;
     Node* prev = NULL;
@@ -27,7 +27,7 @@ void al_keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(v
         if (free_data) free_data(curr->data);
 
         free(curr);
-        return;
+        return 0;
     }
 
     while (curr && cmp(curr->data, key) != 0) {
@@ -35,14 +35,16 @@ void al_keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(v
         curr = curr->next;
     }
 
-    if (curr == NULL) return;
+    if (curr == NULL) return 0;
 
     prev->next = curr->next;
     free(curr);
+
+    return 0;
 }
-void al_destroylist(Node** head, void (*free_data)(void*)) {
+int al_destroylist(Node** head, void (*free_data)(void*)) {
     assert(head != NULL);
-    if (head == NULL || *head == NULL) return;
+    if (head == NULL || *head == NULL) return -1;
 
     Node* curr = *head;
 
@@ -50,47 +52,58 @@ void al_destroylist(Node** head, void (*free_data)(void*)) {
         Node* next = curr->next;
         if (free_data) free_data(curr->data);
 
-        free(curr->data);
         free(curr);
         curr = next;
     }
 
     *head = NULL;
+
+    return 0;
 }
 
 // ======== Nodes control ========
-void al_binsert(Node** head, void* data) {
+int al_binsert(Node** head, void* data) {
     assert(head != NULL && data != NULL);
-    if (head == NULL || data == NULL) return;
+    if (head == NULL || data == NULL) return -1;
 
     Node* n = al_newnode(data);
-    if (!n) return;
+    if (!n) return -1;
 
     n->next = *head;
     *head = n;
+
+    return 0;
 }
-void al_insertafter(Node* prev, void* data) {
+int al_insertafter(Node* prev, void* data) {
     assert(prev != NULL && data != NULL);
-    if (prev == NULL || data == NULL) return;
+    if (prev == NULL || data == NULL) return -1;
 
     Node* n = al_newnode(data);
-    if (!n) return;
+    if (!n) return -1;
 
     n->next = prev->next;
     prev->next = n;
+
+    return 0;
 }
-void al_push_back(Node* head, void* data) {
-    assert(head != NULL && data != NULL);
-    if (head == NULL || data == NULL) return;
+int al_push_back(Node** head, void* data) {
+    assert(*head != NULL && data != NULL);
 
     Node* n = al_newnode(data);
-    if (!n) return;
+    if (!n) return -1;
 
-    Node* curr = head;
+    if (*head == NULL) {
+        *head = n;
+        return -1;
+    }
+
+    Node* curr = *head;
     while (curr->next != NULL) {
         curr = curr->next;
     }
     curr->next = n;
+
+    return 0;
 }
 Node* al_reverse(Node** head) {
     assert(head != NULL);
@@ -114,7 +127,7 @@ Node* al_reverse(Node** head) {
 }
 
 // ======== Nodes access ========
-Node* al_find(Node* head, void* key, int (*cmp)(void*, void*)) {
+Node* al_find(Node* head, void* key, int (*cmp)(const void*, const void*)) {
     assert(head != NULL && key != NULL && cmp != NULL);
     if (head == NULL || key == NULL || cmp == NULL) return NULL;
 
@@ -188,10 +201,10 @@ size_t al_length(Node* head) {
 
     return size;
 }
-void al_printlist(Node* head) {
+int al_printlist(Node* head) {
     if (head == NULL) {
         printf("Empty List\n");
-        return;
+        return -1;
     }
 
     Node* curr = head;
@@ -203,6 +216,8 @@ void al_printlist(Node* head) {
     }
 
     printf("\n\n");
+
+    return 0;
 }
 int al_cmpstr(const void* s1, const void* s2) {
     return strcmp((char*)s1, (char*)s2);

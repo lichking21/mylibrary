@@ -351,10 +351,10 @@ string* astr_replace(string* s, size_t pos, size_t len, const string* str) {
 
     return s;
 }
-void astr_swap(const string* s1, const string* s2) {
+void astr_swap(string* s1, string* s2) {
     assert(s1 != NULL && s1->data != NULL && s2 != NULL && s2->data != NULL);
 
-    const string* temp = s1;
-    s1 = s2;
-    s2 = temp;
+    string temp = *s1;
+    *s1 = *s2;
+    *s2 = temp;
 }
