@@ -10,8 +10,10 @@
 // ========== Memory management
 string* astr_new(const char* s) {
     string* str = malloc(sizeof(string));
-    if (str == NULL)
+    if (str == NULL) {
+        free(str);
         return NULL;
+    }
 
     size_t size = strlen(s);
     size_t capacity = size + 1;
