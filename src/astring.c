@@ -320,29 +320,34 @@ string* astr_substr(const string* s, size_t pos, size_t len) {
 }
 
 string* astr_replace(string* s, size_t pos, size_t len, const string* str) {
-    assert(s != NULL || s->data != NULL || str != NULL || str->data != NULL || pos < s->size);
+    assert(s != NULL && s->data != NULL && str != NULL && str->data != NULL);
+    assert(pos <= s->size);
 
-    size_t new_size = s->size - len + str->size;
-    if (new_size + 1 > s->capacity) {
-        size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
-        if (new_capacity < new_size + 1)
-            new_capacity = new_size + 1;
+    if (len > s->size - pos) len = s->size - pos;
 
-        char* temp = (char*)realloc(s->data, new_capacity);
+    size_t newSize = s->size - len + str->size;
+
+    if (newSize + 1 > s->capacity) {
+        size_t newCapacity = (s->capacity == 0) ? 16 : s->capacity * 2;
+        if (newCapacity < newSize + 1) newCapacity = newSize + 1;
+
+        char* temp = (char*)realloc(s->data, newCapacity);
         if (!temp) return NULL;
 
         s->data = temp;
-        s->capacity = new_capacity;
+        s->capacity = newCapacity;
     }
 
     void* dest = s->data + pos + str->size;
     void* src = s->data + pos + len;
     size_t bytes_to_move = s->size - pos - len + 1;
-    memmove(dest, src, bytes_to_move);
 
+    memmove(dest, src, bytes_to_move);
     memcpy(s->data + pos, str->data, str->size);
 
-    return src;
+    s->size = newSize;
+
+    return s;
 }
 void astr_swap(const string* s1, const string* s2) {
     assert(s1 != NULL || s1->data != NULL || s2 != NULL || s2->data != NULL);
