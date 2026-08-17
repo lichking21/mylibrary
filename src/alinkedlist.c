@@ -123,7 +123,7 @@ void* al_at(Node* head, size_t idx) {
     Node* curr_node = head;
     size_t curr_idx = 0;
 
-    while (curr_idx != idx) {
+    while (curr_node && curr_idx != idx) {
         curr_node = curr_node->next;
         curr_idx++;
     }
