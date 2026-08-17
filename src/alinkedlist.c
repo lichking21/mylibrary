@@ -5,7 +5,7 @@
 #include "alinkedlist.h"
 
 // ======== Memory control ========
-Node* newnode(void* data) {
+Node* al_newnode(void* data) {
     Node* node = (Node*)malloc(sizeof(Node));
     if (!node) return NULL;
 
@@ -14,7 +14,7 @@ Node* newnode(void* data) {
 
     return node;
 }
-void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void*, void*)) {
+void al_keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void*, void*)) {
     assert(head != NULL || *head != NULL || key != NULL);
 
     Node* curr = *head;
@@ -39,7 +39,7 @@ void keyremove(Node** head, void* key, void (*free_data)(void*), int (*cmp)(void
     prev->next = curr->next;
     free(curr);
 }
-void destroylist(Node** head, void (*free_data)(void*)) {
+void al_destroylist(Node** head, void (*free_data)(void*)) {
     assert(head != NULL || *head != NULL);
 
     Node* curr = *head;
@@ -55,25 +55,25 @@ void destroylist(Node** head, void (*free_data)(void*)) {
 }
 
 // ======== Nodes control ========
-void binsert(Node** head, void* data) {
+void al_binsert(Node** head, void* data) {
     assert(head != NULL || data != NULL);
 
-    Node* n = newnode(data);
+    Node* n = al_newnode(data);
     n->next = *head;
     *head = n;
 }
-void insertafter(Node* prev, void* data) {
+void al_insertafter(Node* prev, void* data) {
     assert(prev != NULL || data != NULL);
 
-    Node* n = newnode(data);
+    Node* n = al_newnode(data);
 
     n->next = prev->next;
     prev->next = n;
 }
-void lpushback(Node* head, void* data) {
+void al_push_back(Node* head, void* data) {
     assert(head != NULL || data != NULL);
 
-    Node* n = newnode(data);
+    Node* n = al_newnode(data);
     Node* curr = head;
 
     while(curr) {
@@ -86,7 +86,7 @@ void lpushback(Node* head, void* data) {
         }
     }
 }
-Node* lreverse(Node** head) {
+Node* al_reverse(Node** head) {
     assert(head != NULL || *head != NULL);
 
     Node* curr = *head;
@@ -107,7 +107,7 @@ Node* lreverse(Node** head) {
 }
 
 // ======== Nodes access ========
-Node* lfind(Node* head, void* key, int (*cmp)(void*, void*)) {
+Node* al_find(Node* head, void* key, int (*cmp)(void*, void*)) {
     assert(head != NULL || key != NULL || cmp != NULL);
 
     Node* curr = head;
@@ -117,7 +117,7 @@ Node* lfind(Node* head, void* key, int (*cmp)(void*, void*)) {
 
     return curr;
 }
-void* lat(Node* head, size_t idx) {
+void* al_at(Node* head, size_t idx) {
     assert(head != NULL);
 
     Node* curr_node = head;
@@ -130,7 +130,7 @@ void* lat(Node* head, size_t idx) {
 
     return curr_node->data;
 }
-void* lpopfront(Node** head) {
+void* al_pop_front(Node** head) {
     assert(head != NULL || *head != NULL);
 
     Node* temp = *head;
@@ -141,7 +141,7 @@ void* lpopfront(Node** head) {
 
     return data;
 }
-void* lpopback(Node** head) {
+void* al_pop_back(Node** head) {
     assert(head != NULL || *head != NULL);
 
     Node* curr = *head;
@@ -163,7 +163,7 @@ void* lpopback(Node** head) {
 }
 
 // ======== Utilities ========
-size_t llength(Node* head) {
+size_t al_length(Node* head) {
     assert(head != NULL);
 
     Node* curr = head;
@@ -176,7 +176,7 @@ size_t llength(Node* head) {
 
     return size;
 }
-void printlist(Node* head) {
+void al_printlist(Node* head) {
     assert(head != NULL);
 
     Node* curr = head;
@@ -189,10 +189,10 @@ void printlist(Node* head) {
 
     printf("\n\n");
 }
-int cmpstr(void* s1, void* s2) {
+int al_cmpstr(void* s1, void* s2) {
     return strcmp((char*)s1, (char*)s2);
 }
-int cmpint(void* v1, void* v2) {
+int al_cmpint(void* v1, void* v2) {
     int val1 = *(int*)v1;
     int val2 = *(int*)v2;
 

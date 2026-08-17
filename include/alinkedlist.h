@@ -8,26 +8,26 @@ typedef struct Node {
 }Node;
 
 // ======== Memory control ========
-Node* newnode(void*);
-void keyremove(Node**, void*, void (*) (void*), int (void*, void*));
-void destroylist(Node **, void (void*));
+Node* al_newnode(void*);
+void al_keyremove(Node**, void*, void (*) (void*), int (void*, void*));
+void al_destroylist(Node **, void (void*));
 
 // ======== Nodes control ========
-void binsert(Node**, void*);
-void insertafter(Node*, void*);
-void lpushback(Node*, void*);
-Node* lreverse(Node**);
+void al_binsert(Node**, void*);
+void al_insertafter(Node*, void*);
+void al_push_back(Node*, void*);
+Node* al_reverse(Node**);
 
 // ======== Nodes access ========
-Node* lfind(Node*, void*, int (void*, void*));
-void* lat(Node*, size_t);
-void* lpopfront(Node**);
-void* lpopback(Node**);
+Node* al_find(Node*, void*, int (void*, void*));
+void* al_at(Node*, size_t);
+void* al_pop_front(Node**);
+void* al_pop_back(Node**);
 
 // ======== Utilities ========
-size_t llength(Node*);
-void printlist(Node*);
-int cmpstr(void*, void*);
-int cmpint(void*, void*);
+size_t al_length(Node*);
+void al_printlist(Node*);
+int al_cmpstr(void*, void*);
+int al_cmpint(void*, void*);
 
 #endif
