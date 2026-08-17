@@ -230,7 +230,7 @@ int astr_compare_all(const string* s1, const string* s2) {
 
     return 0;
 }
-int astr_compare(string* s1, size_t pos, size_t len, string* s2) {
+int astr_compare(const string* s1, size_t pos, size_t len, const string* s2) {
     if (s1 == NULL || s1->data == NULL) return -1;
     if (s2 == NULL || s2->data == NULL) return 1;
 
@@ -348,10 +348,10 @@ string* astr_replace(string* s, size_t pos, size_t len, const string* str) {
 
     return src;
 }
-void astr_swap(string* s1, string* s2) {
+void astr_swap(const string* s1, const string* s2) {
     assert(s1 != NULL || s1->data != NULL || s2 != NULL || s2->data != NULL);
 
-    string temp = *s1;
-    *s1 = *s2;
-    *s2 = temp;
+    const string* temp = s1;
+    s1 = s2;
+    s2 = temp;
 }

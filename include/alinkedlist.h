@@ -27,7 +27,7 @@ void* al_pop_back(Node**);
 // ======== Utilities ========
 size_t al_length(Node*);
 void al_printlist(Node*);
-int al_cmpstr(void*, void*);
-int al_cmpint(void*, void*);
+int al_cmpstr(const void*, const void*);
+int al_cmpint(const void*, const void*);
 
 #endif

@@ -32,11 +32,11 @@ const char* astr_begin(const string*);
 const char* astr_end(const string*);
 size_t astr_copy(string*, char*, size_t, size_t);
 int astr_comparea_ll(const string*, const string*);
-int astr_compare(string*, size_t, size_t, string*);
+int astr_compare(const string*, size_t, size_t, const string*);
 size_t astr_find(const string*, const string*);
 size_t astr_rfind(const string*, const string*);
 string* astr_substr(const string*, size_t, size_t);
 string* astr_replace(string*, size_t, size_t, const string*);
-void astr_swap(string*, string*);
+void astr_swap(const string*, const string*);
 
 #endif

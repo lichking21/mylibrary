@@ -189,10 +189,10 @@ void al_printlist(Node* head) {
 
     printf("\n\n");
 }
-int al_cmpstr(void* s1, void* s2) {
+int al_cmpstr(const void* s1, const void* s2) {
     return strcmp((char*)s1, (char*)s2);
 }
-int al_cmpint(void* v1, void* v2) {
+int al_cmpint(const void* v1, const void* v2) {
     int val1 = *(int*)v1;
     int val2 = *(int*)v2;
 
