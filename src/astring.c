@@ -45,13 +45,7 @@ void astr_free(string* s) {
 size_t astr_length(string* s) {
     assert(s != NULL || s->data != NULL);
 
-    size_t len = 0;
-    while (*s->data != '\0') {
-        len++;
-        s++;
-    }
-
-    return len;
+    return s->size;
 }
 int astr_resize(string* s, size_t new_size) {
     assert(s != NULL || s->data != NULL || s->size != new_size);
