@@ -8,29 +8,29 @@
 static void* getaddr(vector* vec, size_t idx) {
     return (char*)vec->data + (idx * vec->elem_size);
 }
-size_t vsize(vector* vec) {
+size_t avec_size(vector* vec) {
     assert(vec != NULL || vec->data != NULL || vec->size != 0);
 
     return vec->size;
 }
-size_t vcapacity(vector* vec) {
+size_t avec_capacity(vector* vec) {
     assert(vec != NULL || vec->data != NULL || vec->capacity != 0);
 
     return vec->capacity;
 }
-bool vempty(vector* vec) {
+bool avec_empty(vector* vec) {
     assert(vec != NULL || vec->data != NULL || vec->size != 0);
 
     return true;
 }
-size_t vmax_size(vector* vec) {
+size_t avec_max_size(vector* vec) {
     assert(vec != NULL || vec->data != NULL || vec->capacity != 0);
 
     return vec->capacity;
 }
 
 // ========== Memory control ==========
-vector* vecnew(size_t elem_size, size_t init_capacity) {
+vector* avec_new(size_t elem_size, size_t init_capacity) {
     vector* vec = (vector*)malloc(sizeof(vector));
     if (!vec) return NULL;
 
@@ -45,7 +45,7 @@ vector* vecnew(size_t elem_size, size_t init_capacity) {
 
     return vec;
 }
-void vecfree(vector* vec) {
+void avec_free(vector* vec) {
     assert(vec != NULL);
 
     free(vec->data);
@@ -57,7 +57,7 @@ void vecfree(vector* vec) {
 
     free(vec);
 }
-int vreserve(vector* vec, size_t size) {
+int avec_reserve(vector* vec, size_t size) {
     assert(vec != NULL || vec->capacity < size);
 
     size_t newCapacity = (vec->capacity == 0) ? size : vec->capacity + size;
@@ -70,7 +70,7 @@ int vreserve(vector* vec, size_t size) {
 
     return 1;
 }
-int vresize(vector* vec, size_t n) {
+int avec_resize(vector* vec, size_t n) {
     assert(vec != NULL);
 
     if (n < vec->size) {
@@ -103,7 +103,7 @@ int vresize(vector* vec, size_t n) {
 }
 
 // ========== Elements control ==========
-int vassign(vector* dest, void* src_start, void* src_end) {
+int avec_assign(vector* dest, void* src_start, void* src_end) {
     assert(dest != NULL || src_start != NULL || src_end != NULL);
 
     size_t src_size = (char*)src_end - (char*)src_start;
@@ -123,7 +123,7 @@ int vassign(vector* dest, void* src_start, void* src_end) {
 
     return 1;
 }
-int vpush_back(vector* vec, void* data) {
+int avec_push_back(vector* vec, void* data) {
     assert (vec != NULL || data != NULL);
 
     if (vec->size + 1 > vec->capacity) {
@@ -144,7 +144,7 @@ int vpush_back(vector* vec, void* data) {
 
     return 1;
 }
-void vpop_back(vector* vec) {
+void avec_pop_back(vector* vec) {
     assert (vec != NULL || vec->data != NULL);
 
     vec->size--;
@@ -153,9 +153,9 @@ void vclear(vector* vec) {
    assert(vec != NULL || vec->size != 0 || vec->capacity != 0);
 
     while (vec->size != 0)
-        vpop_back(vec);
+        avec_pop_back(vec);
 }
-vector* verase(vector* vec, size_t first, size_t last) {
+vector* avec_erase(vector* vec, size_t first, size_t last) {
     assert(vec != NULL && vec->data != NULL);
 
     if (first >= vec->size || first >= last) return vec;
@@ -175,7 +175,7 @@ vector* verase(vector* vec, size_t first, size_t last) {
 
     return vec;
 }
-int vinsert(vector* vec, size_t pos, void* elem) {
+int avec_insert(vector* vec, size_t pos, void* elem) {
     assert(vec != NULL || elem != NULL || pos < vec->size);
 
     if (vec->size == vec->capacity) {
@@ -204,7 +204,7 @@ int vinsert(vector* vec, size_t pos, void* elem) {
 
     return 1;
 }
-void vswap(vector* vec, vector* x) {
+void avec_swap(vector* vec, vector* x) {
     assert(vec != NULL || vec->data != NULL || x != NULL || x->data != NULL);
 
    vector temp = *vec;
@@ -213,25 +213,25 @@ void vswap(vector* vec, vector* x) {
 }
 
 // ========== Elements access ==========
-void* vdata(vector* vec) {
+void* avec_data(vector* vec) {
     assert(vec != NULL || vec->data != NULL ||vec->size != 0 || vec->capacity != 0);
 
     return vec->data;
 }
-void* vbegin(vector* vec) {
+void* avec_begin(vector* vec) {
     assert(vec != NULL || vec->data != NULL);
 
-    return vdata(vec);
+    return avec_data(vec);
 }
-void* vend(vector* vec) {
+void* avec_end(vector* vec) {
     assert(vec != NULL || vec->data != NULL);
 
     return (char*)vec->data + (vec->size * vec->elem_size);
 }
-void* vfront(vector* vec) {
+void* avec_front(vector* vec) {
     assert(vec != NULL || vec->data != NULL);
 
-    void** data = vdata(vec);
+    void** data = avec_data(vec);
 
     return data[0];
 }
