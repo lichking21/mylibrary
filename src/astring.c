@@ -45,12 +45,14 @@ void astr_free(string* s) {
 
 // ========== Capacity & Size
 size_t astr_length(string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     return s->size;
 }
 int astr_resize(string* s, size_t new_size) {
-    assert(s != NULL || s->data != NULL || s->size != new_size);
+    assert(s != NULL && s->data != NULL);
+
+    if (s->size == new_size) return 1;
 
     if (new_size + 1 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
@@ -73,7 +75,7 @@ int astr_resize(string* s, size_t new_size) {
 }
 
 int astr_append(string* s1, const string* s2) {
-    assert(s1 != NULL || s2 != NULL || s1->data != NULL || s2->data != NULL);
+    assert(s1 != NULL && s2 != NULL && s1->data != NULL && s2->data != NULL);
 
     size_t new_size = s1->size + s2->size;
 
@@ -95,7 +97,7 @@ int astr_append(string* s1, const string* s2) {
     return 1;
 }
 string* astr_insert(string* s, const char* str, size_t pos) {
-    assert(s != NULL || s->data != NULL || str != NULL || pos < s->size);
+    assert(s != NULL && s->data != NULL && str != NULL && pos <= s->size);
 
     size_t new_size = s->size + strlen(str);
     if (new_size + 1 > s->capacity) {
@@ -117,7 +119,7 @@ string* astr_insert(string* s, const char* str, size_t pos) {
 }
 
 int astr_push_back(string* s, char val) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     if (s->size + 2 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
@@ -136,28 +138,28 @@ int astr_push_back(string* s, char val) {
     return 1;
 }
 void astr_pop_back(string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL && s->size > 0);
 
     s->size--;
     s->data[s->size] = '\0';
 }
 
 void astr_clear(string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     while(s->size != 0)
         astr_pop_back(s);
 }
 
 int astr_empty(const string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     if (s->size == 0) return 0;
 
     return 1;
 }
 string* astr_erase(string* s, size_t pos, size_t len) {
-    assert(s != NULL || s->data != NULL || pos > s->size);
+    assert(s != NULL && s->data != NULL && pos <= s->size);
 
     if (len > s->size - pos) len = s->size - pos;
     if (len == 0) return s;
@@ -175,29 +177,29 @@ string* astr_erase(string* s, size_t pos, size_t len) {
 
 // ========== Elements accesess
 const char* astr_at(const string* s, size_t pos) {
-    assert (s != NULL || s->data != NULL || pos <= s->size);
+    assert(s != NULL && s->data != NULL && pos <= s->size);
 
     return &s->data[pos];
 }
 
 const char* astr_back(const string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL && s->size > 0);
 
     return &s->data[s->size - 1];
 }
 const char* astr_begin(const string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     return s->data;
 }
 const char* astr_end(const string* s) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL);
 
     return &s->data[s->size];
 }
 
 size_t astr_copy(string* s, char* dest, size_t len, size_t pos) {
-    assert(s != NULL || s->data != NULL);
+    assert(s != NULL && s->data != NULL && dest != NULL && pos + len <= s->size);
 
     for (size_t i = 0; i < len; i++) {
         dest[i] = s->data[pos++];
@@ -304,7 +306,7 @@ size_t astr_rfind(const string* s, const string* needle) {
     return -1;
 }
 string* astr_substr(const string* s, size_t pos, size_t len) {
-    assert(s != NULL || s->data != NULL || pos < s->size);
+    assert(s != NULL && s->data != NULL && pos <= s->size);
     if (len > s->size - pos)    len = s->size - pos;
 
     char* temp = (char*)malloc(len + 1);
@@ -350,7 +352,7 @@ string* astr_replace(string* s, size_t pos, size_t len, const string* str) {
     return s;
 }
 void astr_swap(const string* s1, const string* s2) {
-    assert(s1 != NULL || s1->data != NULL || s2 != NULL || s2->data != NULL);
+    assert(s1 != NULL && s1->data != NULL && s2 != NULL && s2->data != NULL);
 
     const string* temp = s1;
     s1 = s2;
