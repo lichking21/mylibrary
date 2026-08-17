@@ -58,15 +58,14 @@ void avec_free(vector* vec) {
     free(vec);
 }
 int avec_reserve(vector* vec, size_t size) {
-    assert(vec != NULL || vec->capacity < size);
+    assert(vec != NULL);
+    if (size <= vec->capacity) return 1;
 
-    size_t newCapacity = (vec->capacity == 0) ? size : vec->capacity + size;
-
-    void* temp = realloc(vec->data, newCapacity * vec->elem_size);
+    void* temp = realloc(vec->data, size * vec->elem_size);
     if (temp == NULL) return 0;
 
     vec->data = temp;
-    vec->capacity = newCapacity;
+    vec->capacity = size;
 
     return 1;
 }
