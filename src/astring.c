@@ -52,7 +52,7 @@ size_t astr_length(string* s) {
 int astr_resize(string* s, size_t new_size) {
     assert(s != NULL && s->data != NULL);
 
-    if (s->size == new_size) return 1;
+    if (s->size == new_size) return 0;
 
     if (new_size + 1 > s->capacity) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
@@ -60,7 +60,7 @@ int astr_resize(string* s, size_t new_size) {
             new_capacity = new_size + 1;
 
         char* temp = (char*)realloc(s->data, new_capacity);
-        if (!temp) return 0;
+        if (!temp) return -1;
 
         s->data = temp;
         s->capacity = new_capacity;
@@ -71,7 +71,7 @@ int astr_resize(string* s, size_t new_size) {
     s->size = new_size;
     s->data[s->size] = '\0';
 
-    return 1;
+    return 0;
 }
 
 int astr_append(string* s1, const string* s2) {
@@ -83,7 +83,7 @@ int astr_append(string* s1, const string* s2) {
         size_t new_capacity = (s1->capacity == 0) ? new_size + 1 : s1->capacity * 2;
 
         char* temp = (char*)realloc(s1->data, new_capacity);
-        if (temp == NULL) return 0;
+        if (temp == NULL) return -1;
 
         s1->data = temp;
         s1->capacity = new_capacity;
@@ -94,7 +94,7 @@ int astr_append(string* s1, const string* s2) {
     s1->size = new_size;
     s1->data[s1->size] = '\0';
 
-    return 1;
+    return 0;
 }
 string* astr_insert(string* s, const char* str, size_t pos) {
     assert(s != NULL && s->data != NULL && str != NULL && pos <= s->size);
@@ -125,7 +125,7 @@ int astr_push_back(string* s, char val) {
         size_t new_capacity = (s->capacity == 0) ? 16 : s->capacity * 2;
 
         char* temp = (char*)realloc(s->data, new_capacity);
-        if (temp == NULL) return 0;
+        if (temp == NULL) return -1;
 
         s->data = temp;
         s->capacity = new_capacity;
@@ -135,7 +135,7 @@ int astr_push_back(string* s, char val) {
     s->size++;
     s->data[s->size] = '\0';
 
-    return 1;
+    return 0;
 }
 void astr_pop_back(string* s) {
     assert(s != NULL && s->data != NULL && s->size > 0);
@@ -154,9 +154,9 @@ void astr_clear(string* s) {
 int astr_empty(const string* s) {
     assert(s != NULL && s->data != NULL);
 
-    if (s->size == 0) return 0;
+    if (s->size == 0) return -1;
 
-    return 1;
+    return 0;
 }
 string* astr_erase(string* s, size_t pos, size_t len) {
     assert(s != NULL && s->data != NULL && pos <= s->size);

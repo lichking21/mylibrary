@@ -68,24 +68,24 @@ void avec_free(vector* vec) {
 }
 int avec_reserve(vector* vec, size_t size) {
     assert(vec != NULL && vec->data != NULL);
-    if (vec == NULL || vec->data == NULL) return 0;
-    if (size <= vec->capacity) return 1;
+    if (vec == NULL || vec->data == NULL) return -1;
+    if (size <= vec->capacity) return 0;
 
     void* temp = realloc(vec->data, size * vec->elem_size);
-    if (temp == NULL) return 0;
+    if (temp == NULL) return -1;
 
     vec->data = temp;
     vec->capacity = size;
 
-    return 1;
+    return 0;
 }
 int avec_resize(vector* vec, size_t n) {
     assert(vec != NULL && vec->data != NULL);
-    if (vec == NULL || vec->data == NULL) return 0;
+    if (vec == NULL || vec->data == NULL) return -1;
 
     if (n < vec->size) {
         vec->size = n;
-        return 1;
+        return 0;
     }
 
     if (n > vec->size) {
@@ -94,7 +94,7 @@ int avec_resize(vector* vec, size_t n) {
             while (newCapacity < n) newCapacity *= 2;
 
             void* temp = realloc(vec->data, newCapacity * vec->elem_size);
-            if (temp == NULL) return 0;
+            if (temp == NULL) return -1;
 
             vec->data = temp;
             vec->capacity = newCapacity;
@@ -109,7 +109,7 @@ int avec_resize(vector* vec, size_t n) {
 
         vec->size = n;
     }
-    return 1;
+    return 0;
 }
 
 // ========== Elements control ==========
@@ -122,7 +122,7 @@ int avec_assign(vector* dest, void* src_start, void* src_end) {
 
     if (items_count > dest->capacity) {
         void* temp = realloc(dest->data, items_count * dest->elem_size);
-        if (!temp) return 0;
+        if (!temp) return -1;
 
         dest->data = temp;
         dest->capacity = items_count;
@@ -132,7 +132,7 @@ int avec_assign(vector* dest, void* src_start, void* src_end) {
 
     dest->size = items_count;
 
-    return 1;
+    return 0;
 }
 int avec_push_back(vector* vec, void* data) {
     assert(vec != NULL && vec->data != NULL && data != NULL);
@@ -142,7 +142,7 @@ int avec_push_back(vector* vec, void* data) {
         size_t new_capacity = (vec->capacity == 0) ? 16 : vec->capacity * 2;
 
         void* temp = realloc(vec->data, new_capacity * vec->elem_size);
-        if (!temp) return 0;
+        if (!temp) return -1;
 
         vec->data = temp;
         vec->capacity = new_capacity;
@@ -154,7 +154,7 @@ int avec_push_back(vector* vec, void* data) {
     memcpy(addr, data, vec->elem_size);
     vec->size++;
 
-    return 1;
+    return 0;
 }
 void avec_pop_back(vector* vec) {
     assert(vec != NULL && vec->data != NULL && vec->size > 0);
@@ -201,7 +201,7 @@ int avec_insert(vector* vec, size_t pos, void* elem) {
         size_t newCapacity = (vec->capacity == 0) ? 1 : vec->capacity * 2;
 
         void* temp = realloc(vec->data, newCapacity * vec->elem_size);
-        if (temp == NULL) return 0;
+        if (temp == NULL) return -1;
 
         vec->data = temp;
         vec->capacity = newCapacity;
@@ -221,7 +221,7 @@ int avec_insert(vector* vec, size_t pos, void* elem) {
 
     vec->size++;
 
-    return 1;
+    return 0;
 }
 void avec_swap(vector* vec, vector* x) {
     assert(vec != NULL && vec->data != NULL && x != NULL && x->data != NULL);
